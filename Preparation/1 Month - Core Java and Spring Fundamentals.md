@@ -15,7 +15,10 @@ for instantiation, we can use List<Person> = new ArrayList<Person> and from java
 
 Inheritance with generics
 
-public class AgeComparator implements Comparator<Person>  => the person type is necessary over there coz the extending class has generics and the methods which are overriden are automatically implemented  
+public class AgeComparator implements Comparator<Person>  => the person type is necessary over there coz the extending class has generics and the methods which are overriden are automatically implemented 
+for example if we have 
+public class AgeComp<T> implements Compator<Integer>, then its necessary to for the current cls to implement the compareTo(Integer o1, Integer o2) only but not the compareTo(T o1, T o2)
+
 generally  the comparator cls is implemented as a anonymous class, within the Collections.sort(<collection to be sorted>, <custom comparator used>)
 
 if we have 
