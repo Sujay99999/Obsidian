@@ -19,8 +19,16 @@ public class AgeComparator implements Comparator<Person>  => the person type is 
 generally  the comparator cls is implemented as a anonymous class, within the Collections.sort(<collection to be sorted>, <custom comparator used>)
 
 if we have 
-public class A<T implements Comparable>   === 
-public class A<T implements Comparable<T>>  === 
+All the generic type cls can extend to another cls or a interface, such as if a type T is present as a generic, it can extend to others creating a upper bound to it
+if the same type t extends to multiple classes or interfaces, the class must come first
+<T extends A&B&C>, where a=class and b,c=interfaces
+
+if we a have the genric to extend to a generic interface, then we can simply write as
+public class A<T implements Comparable> , 
+which means the type t passed must have implemented the interface
+
+it works, but not fully fool proof as we can call the interface methods with random objects, hence 
+public class A<T implements Comparable<T>>  is the right way, as we are saying that the parameters passed to the methods of the interface must also be of type T 
 
 things to check again
 how iterator and iterable are implemented to the collections
