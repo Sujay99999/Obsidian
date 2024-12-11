@@ -1,0 +1,9 @@
+TopoSort
+	Find all the different permutations possible for DAG
+		https://www.geeksforgeeks.org/all-topological-sorts-of-a-directed-acyclic-graph/
+	Check if the given array of Subsequences form an valid array
+		Create a graph out of the subsequences one by one, and check if the formed graph is a valid DAG
+	FInd the shortest path from Src to all other vertices in DAG
+		https://www.geeksforgeeks.org/shortest-path-for-directed-acyclic-graphs/
+	
+	
