@@ -1,3 +1,10 @@
+
+Status quo
+- [ ] Revise the problems of DSU and solve the problems 
+- [ ] Network flow problem and Maximum Bipartite matching algorithm
+- [ ] MST problems
+
+
 TopoSort
 	Find all the different permutations possible for DAG [Not Present in the Book - Rewrite ]
 		https://www.geeksforgeeks.org/all-topological-sorts-of-a-directed-acyclic-graph/
