@@ -3,6 +3,8 @@ Status quo
 - [ ] Revise the problems of DSU and solve the problems 
 - [ ] Network flow problem and Maximum Bipartite matching algorithm
 - [ ] MST problems
+- [ ] SCC algorithm
+- [ ] All algorithm revision
 
 
 TopoSort
