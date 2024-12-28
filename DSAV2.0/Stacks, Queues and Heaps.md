@@ -6,3 +6,4 @@ Problems to revise
 		Prefix to infix
 		Infix to postfix
 		Infix to prefix
+	Trapping Rainwater  - Optimized approach
