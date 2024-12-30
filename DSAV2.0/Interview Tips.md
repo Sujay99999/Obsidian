@@ -1,0 +1,2 @@
+- Before solving the questions, ask all the necessary doubts
+- 
