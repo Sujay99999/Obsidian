@@ -16,6 +16,7 @@
 - Behavioral Preparation
 	- [ ] Get all the LP together
 	- [ ] Create all stories for each principle
+	- [ ] Wells fargo leadership principles
 - Misc
 	- [ ] Prepare 2 questions at the end of the interview
 	- [ ] In your intro, Add the part of "Why Amazon"
