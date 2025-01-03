@@ -2,6 +2,11 @@
  - Technical preparation
 	 - DSA
 		 - [ ]  Bare Practice 1
+			 - [ ] Full Stack, Queue, Heap Revision from 450
+			 - [ ] BT and BST revision from 450
+			 - [ ] Bit Manipulation and Matrix revision from 450
+			 - [ ] Trie and DP basic problems
+			 - [ ] Greedy and Backtracking revision from 450
 		 - [ ] Total Revision
 		 - [ ] OA questions revision
 	 - LLD
