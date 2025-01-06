@@ -19,6 +19,7 @@
 		 - [ ] CN
 		 - [ ] OS
 		 - [ ] Spring boot and Node js
+		 - [ ] Java Basics
 - Behavioral Preparation
 	- [ ] Get all the LP together
 	- [ ] Create all stories for each principle
