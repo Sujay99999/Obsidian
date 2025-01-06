@@ -8,7 +8,7 @@
 			 - [ ] Trie and DP basic problems
 			 - [ ] Greedy and Backtracking revision from 450
 			 - [ ] Interval Problems from leetcode
-		 - [ ] Total Revision
+		 - [ ] Total Revision 
 		 - [ ] Basic Level Questions revision (Basic Mathematics, Bit Masking)
 		 - [ ] OA questions revision
 	 - LLD
