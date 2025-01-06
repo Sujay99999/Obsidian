@@ -9,6 +9,7 @@
 			 - [ ] Greedy and Backtracking revision from 450
 			 - [ ] Interval Problems from leetcode
 		 - [ ] Total Revision
+		 - [ ] Basic Level Questions revision (Basic Mathematics, Bit Masking)
 		 - [ ] OA questions revision
 	 - LLD
 		 - [ ] Revise all the Patterns
