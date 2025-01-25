@@ -8,4 +8,8 @@ hypervisors
 	These VMs are also called as guests
 	There are 2 types of Hypervisors
 		Type 1 hypervisor
+			- Type 1 hypervisor is the one which runs directly on the server hardware without a operating system beneath it
+			- Since, there is no intervening layer between the hypervisor and the hardwre, this implmentation of software is also known as "Bare Metal implementation"
+			- Type 1 is considered much more efficient than the Type 2, as it can directly communicate with the hardware resources below it.
+			- 
 			
