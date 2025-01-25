@@ -1,0 +1,1 @@
+Virtualization refers to the abstraction of some physical component into a logical object
