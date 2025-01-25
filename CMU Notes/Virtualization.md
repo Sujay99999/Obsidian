@@ -1,1 +1,2 @@
 Virtualization refers to the abstraction of some physical component into a logical object
+It created the abaility to condense multiple physical servers into fewer servers that would run multiple virtual machines. The measure of consolidation is defined by Consolidation ratio i.e., 8:1 means 8 VMs are running on 1 physical server.
