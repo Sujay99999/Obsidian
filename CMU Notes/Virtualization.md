@@ -34,4 +34,8 @@ Converged infrastructure means the way hardware vendors started to create server
 	- In x8086 architectures, the protection and security is provided in 4 different levels, on which the processor commands are run, known as rings
 	- Ring 0 is the most privilged one, where the OS kernel works, Ring 1 and 2 are where the device drivers commands are executed, and Ring 3 is for the applications.
 	- **Hypervisor runs on Ring 0**
-	- 
+	- Packaging and distributing VMs
+		- VMs are generally provisioned using the Clone files i.e., we can easily clone an entire VM into a bunch of files
+		- We can also build templates for VMs
+		- We can also use OVF - Open Virtualization format which helps to bundle the VMs into a set of files which then can be converted into vendor-neutral format i.e., Xen based VMs once created can be exported into a OVF files, which then can be run on Hyper-V environment
+- VM vs Containers
