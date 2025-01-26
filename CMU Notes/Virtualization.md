@@ -31,4 +31,7 @@ Converged infrastructure means the way hardware vendors started to create server
 		- CPU -  Most of the times, the VM will be dedicated to an single CPU, but instead the VMs are only able to schedule CPU cycles of the host using the hypervisor
 		- RAM - Similar concept as CPU, but the hypervisor can add additional RAM if required without reboot
 		- NIC - Hypervisors provide virtual network for VM, by having individual virtual NIC for the VMs, and these are connected by the Virtual switches in the hypervisor
-		- 
+	- In x8086 architectures, the protection and security is provided in 4 different levels, on which the processor commands are run, known as rings
+	- Ring 0 is the most privilged one, where the OS kernel works, Ring 1 and 2 are where the device drivers commands are executed, and Ring 3 is for the applications.
+	- **Hypervisor runs on Ring 0**
+	- 
