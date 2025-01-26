@@ -27,4 +27,8 @@ Converged infrastructure means the way hardware vendors started to create server
 	- The main files that are important to the VM are
 		- Configuration file - Describes the resources required for the VM
 		- Virtual Disk files
-			
+	- Resources for VM
+		- CPU -  Most of the times, the VM will be dedicated to an single CPU, but instead the VMs are only able to schedule CPU cycles of the host using the hypervisor
+		- RAM - Similar concept as CPU, but the hypervisor can add additional RAM if required without reboot
+		- NIC - Hypervisors provide virtual network for VM, by having individual virtual NIC for the VMs, and these are connected by the Virtual switches in the hypervisor
+		- 
