@@ -24,5 +24,7 @@ Converged infrastructure means the way hardware vendors started to create server
 		- Retain complete access to the system resources
 		- Provide an environment with minimal performance cost
 - Virtual Machines
-	- 
+	- The main files that are important to the VM are
+		- Configuration file - Describes the resources required for the VM
+		- Virtual Disk files
 			
