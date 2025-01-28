@@ -2,6 +2,7 @@ AWS access key
 sujay_root  --> AKIAZ7SALAXCFR5UQ2OU - 4BTPO01LE/BX/twx3imPddaUT7osNpY77ifTK+ZT
 
 Burstable res
+SAN-style storage systems - EBS
 
 
 AWS
