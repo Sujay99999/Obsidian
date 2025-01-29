@@ -7,6 +7,7 @@ project - getting-started-with-cloud-computing
 Burstable res
 SAN-style storage systems - EBS
 	attach ebs to insatnce - make sure to format the ebs instance and mount a file system around it
+Sysbench for Disk IO operations
 
 
 AWS
