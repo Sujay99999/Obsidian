@@ -8,12 +8,14 @@ Burstable res
 SAN-style storage systems - EBS
 	attach ebs to insatnce - make sure to format the ebs instance and mount a file system around it
 Sysbench for Disk IO operations
+Why terraform must store the state
 
 
 Questions for reddy
 	can we have 4 ppl in a team
 	can we mock the submitters that we have in the major project
 	Shall i team up with the 2mscs folks
+	
 
 AWS
 	EC2
