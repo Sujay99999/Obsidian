@@ -13,6 +13,7 @@ Sysbench for Disk IO operations
 Questions for reddy
 	can we have 4 ppl in a team
 	can we mock the submitters that we have in the major project
+	Shall i team up with the 2mscs folks
 
 AWS
 	EC2
