@@ -8,6 +8,7 @@ Burstable res
 SAN-style storage systems - EBS
 	attach ebs to insatnce - make sure to format the ebs instance and mount a file system around it
 Sysbench for Disk IO operations
+why to create seperate tfvars instead of the variables.tf file only
 Why terraform must store the state
 Horizontal scalin can be performed by partioning the problem domain into smaller shards and making individual resource responsible for a single partition(shard)
 
