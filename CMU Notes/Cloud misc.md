@@ -32,3 +32,9 @@ Misc questions to checkout
 Is the following statement true or false?
 
 "In the case of AWS burstable read/write bandwidth for EBS volume, NO GP2 volume can accumulate more than 5.4 million I/O credits."
+
+
+
+Peak load calc = 4200/500 = 8.4, taking an upper round off as 9: 9x5x4 =180
+Greedy Load calc = Servers required at each 15 mins are = [2,2,3,4,7,7,3,2,4,2,2,2,9,8,9,8]. Hence the billing is = (74x5)/4 = 92.5. dividing by 4 because of 15 mins
+Lowest Cost, remains same as Greedy cost as its calculated when the graph is known
