@@ -44,3 +44,8 @@ Lowest Cost, remains same as Greedy cost as its calculated when the graph is kno
 
 Project 2
 	docker credhelper and using it against gcp cli ==> gcpcloud auth configure-docker
+
+Project 2 learnings
+	- docker cmds override the application.prop i.e., SERVER_PORT in dockerfile has overridden the application.properties of the sprin project which is server.port
+	- Dockerfile must be built from the right folder
+	- 
