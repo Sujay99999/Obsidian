@@ -45,6 +45,7 @@ Lowest Cost, remains same as Greedy cost as its calculated when the graph is kno
 Project 2
 	- docker credhelper and using it against gcp cli ==> gcpcloud auth configure-docker
 	-  what is num-nodes in cluster create vs replicaset nodes
+	- what is kubernetes, cluster-ip in kubectl get svc
 
 Project 2 learnings
 	- docker cmds override the application.prop i.e., SERVER_PORT in dockerfile has overridden the application.properties of the sprin project which is server.port
