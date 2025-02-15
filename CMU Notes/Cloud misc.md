@@ -47,6 +47,7 @@ Project 2
 	-  what is num-nodes in cluster create vs replicaset nodes
 	- what is kubernetes, cluster-ip in kubectl get svc
 	- What is the difference btw mysql-profile and mysql-instance
+	- exact difference between ingress and loadbalancer
 
 Project 2 learnings
 	- docker cmds override the application.prop i.e., SERVER_PORT in dockerfile has overridden the application.properties of the sprin project which is server.port
