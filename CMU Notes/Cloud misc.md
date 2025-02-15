@@ -50,5 +50,5 @@ Project 2
 
 Project 2 learnings
 	- docker cmds override the application.prop i.e., SERVER_PORT in dockerfile has overridden the application.properties of the sprin project which is server.port
-	- Dockerfile must be built from the right folder
+	- Dockerfile must be built from the right folder i.e., the copy funtion in dockerfile such as (copy . .) basically copies the files at the current shell loc, which needs to be right
 	- Wh
