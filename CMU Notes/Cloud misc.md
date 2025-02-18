@@ -13,12 +13,6 @@ Why terraform must store the state
 Horizontal scalin can be performed by partioning the problem domain into smaller shards and making individual resource responsible for a single partition(shard)
 
 
-Questions for reddy
-	can we have 4 ppl in a team
-	can we mock the submitters that we have in the major project
-	Shall i team up with the 2mscs folks
-	
-
 AWS
 	EC2
 		Instance types
