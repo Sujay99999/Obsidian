@@ -31,4 +31,6 @@
 			- Response - Activity in response to the stimulus (Detect and Recover/ Prevent)
 			- Response measure - Measure with which the response is evaluated (Time logs of the entire scenario)
 	- Modifiability
-		- 
+		- Refers to the ease with which a software system can accommodate a change
+	- Performance
+		- How long does it take to respond
