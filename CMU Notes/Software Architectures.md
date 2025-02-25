@@ -4,6 +4,8 @@
 	- Step 3: Converting the Analysis Model to Design Model (Known as Architecture and Design Modelling)
 - On top of the Use cases from the functional requirements, we should also gather the "Quality Attributes"
 - Quality attributes (known as Systemic properties) are the drivers that will be impacted by the architectural/ design decisions we make
+
+
 - Architectural drivers are the requirements that shape the architecture. They are
 	- Functional Requirements
 	- Quality Attributes
@@ -34,3 +36,21 @@
 		- Refers to the ease with which a software system can accommodate a change
 	- Performance
 		- How long does it take to respond
+
+
+- Context Diagram
+	- Defines the boundary between the system, and its environment, showing the entities that interact with it
+	- CD helps to understand the context and high level overview of the system, which can lead to better understanding of requirements from Architect's POV
+	- Steps to build the Context diagram
+		- Identify the Software system
+		- Identify the Actors, that interact with the software system
+		- Identify the high level interactions between the above 2 entities
+	- CD is generally accompanied with other diagrams such as Event flow diagrams, Use case diagrams, etc.
+
+
+- Software Architectural Designs
+	- The design/ strcuture of the software impacts the properties the system will exhibit
+
+
+- References
+	- Software Architecture in Practice, 4th Edition - Len Bass
