@@ -94,8 +94,17 @@
 		- Pub-Sub
 		- Pipes and Filters
 		- Microservices
+			- Subdomains of a systems can be developed as individual, small teams
+			- Each of the subdomains don't have the dependency on other, have autonomy of development
+			- Generally, microservices pattern is derived from the Domain driven design pattern
+			- Connectors must be optimized as much as possible for supporting the quality attributes such as performance, etc.
 		- Event driven
-	- 
+
+- Tactics
+	- Provide the fine grained structural details for the patterns, allowing more control on the quality attributes
+	- Part of the "Response" of the 6-part view
+	- Security Quality attribute
+		- 
 
 
 - References
