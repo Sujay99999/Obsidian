@@ -49,7 +49,53 @@
 
 
 - Software Architectural Designs
-	- The design/ strcuture of the software impacts the properties the system will exhibit
+	- The design/ structure of the software impacts the properties the system will exhibit
+	- Two categories of the structures
+		- Static structures
+			- Its more about the code, before the runtime, and how its organized
+			- Static structure elements
+				- Modules
+				- Subsystems
+				- Layers
+		- Dynamic structures
+			- These are the runtime elements of the code
+	- Three essential views of Structures
+		- Modules
+			- Primarily a static view
+			- Represents the code and data units
+			- Helps to determine the quality attributes such as Reusability, modifiability, etc.
+			- The module view helps to determine the relationship between the individual components as
+				- "Uses" relationship - A uses B
+				- "Composition" relationship - A is part of B
+				- Generalization relationship - B generalizes A
+			- Examples as UML diagrams
+		- Components and Connectors
+			- Helps to understand the elements interact with each other
+			- Describes the runtime behavior (components) and interactions (connectors) among components
+			- Components are like services, peers, clients, etc.
+			- Connectors are like Call-return, pipes, locks, etc.
+			- Helps to determine the quality attributes such as Performance, Availability, etc.
+		- Allocation
+			- Establishes the mapping from the software structures to system's non software structures
+			- Tells more about the deployment styles
+				- What components are deployed on what platforms
+				- Organization of the components for different environments
+				- How should the components must be deployed on the production environments
+
+- Architectural patterns
+	- General, reusable pattern/ framework already designed to solve a specific common problems within a given context
+	- Some patterns are
+		- Model - View - Controller
+		- Monolith
+		- Layered
+			- System has a mix of low-level and high-level issues, where high level operations rely on the low level
+			- Code changes wont ripple through the system
+			- Components can be replaced without major impact
+		- Pub-Sub
+		- Pipes and Filters
+		- Microservices
+		- Event driven
+	- 
 
 
 - References
