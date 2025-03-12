@@ -1,7 +1,14 @@
-Networking
-- Container to External Web 
-	- Works out of box - No additional settings required
-- Container to Container Communication
+- Networking
+	- Container to External Web 
+		- Works out of box - No additional settings required
+	- Container to Container Communication
+		- We need to run the containers and put them in the same network, and the IP addresses of the respective container for all the outgoing requests must be replaced with the container name itself
+	- Container to Host machine Communication
+		- We need to replace localhost with host.docker.internal, as it gets replaced with the localhost IP address under the hood
+	- Docker Networks
+		- Containers in the same network need not expose any ports. Exposing of the ports is only required when we try to connect to the containers from localhost or outside of containers
+		- IP resolution in docker networks
+			- Any outgoing request from the container is basically replaced with the correct IP address, rather than changing the source code
+		- The default driver of the network is "Bridge" type
+- Building Multi-container Apps
 	- 
-- Container to Host machine Communication
-	- We need to replace localhost with host.docker.internal, as it gets replaced with the localhost IP address under the hood
