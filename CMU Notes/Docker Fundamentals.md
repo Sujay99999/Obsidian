@@ -13,4 +13,4 @@
 			- Any outgoing request from the container is basically replaced with the correct IP address, rather than changing the source code
 		- The default driver of the network is "Bridge" type
 - Building Multi-container Apps
-	- 
+	- If we are planning to the put multiple containers into the same network, we need not publish the ports, as publishing them says that they are communicating through host network
