@@ -14,3 +14,4 @@
 		- The default driver of the network is "Bridge" type
 - Building Multi-container Apps
 	- If we are planning to the put multiple containers into the same network, we need not publish the ports, as publishing them says that they are communicating through host network
+	- For React application, its necessary to publish the ports (exposing it to the localhost) as well as putting the container into the docker network
