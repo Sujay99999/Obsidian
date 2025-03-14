@@ -15,5 +15,16 @@
 - Building Multi-container Apps
 	- If we are planning to the put multiple containers into the same network, we need not publish the ports, as publishing them says that they are communicating through host network
 	- For React application, its necessary to publish the ports (exposing it to the localhost) as well as putting the container into the docker network
+	- Instead of hardcoding the environment variables, you can define them in a file and reference it the commands (Similar to Node)
 - Docker Compose
-	- 
+	- Docker-compose is a orchestration tool for managing docker containers (similar to k8s), but used for small purposes (ideally to build multi-container application in a single host)
+	- Helps in congregating the commands into one config file, called "docker-compose.yaml", which is like a wrapper, but runs the docker commands under the hood
+	- All the services(containers) created, will be automatically part of a network created, when docker-compose is used. Can attach networks explicitly as well
+	- All the services will be removed when exited by default (No need to specify the -rm flag)
+	- Can explicitly mention the order of creation of services using the "depends_on" parameter
+	- Even though the services/ container names are different when created, but they actually reference the same names as given in the config file (Important). Can force to name it explicitly by "container_name" parameter
+	- Commands
+		- "docker-compose up", will start all the services with the required network and volumes
+			- "--build", forces to build all the images from scratch, else uses the already built images
+		- "docker-compose down", will stop all the services and network, need to specify "-v" explicitly for removing the volumes as well
+		- "docker-compose build", just builds the images without starting them
