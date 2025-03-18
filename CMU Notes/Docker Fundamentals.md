@@ -28,6 +28,7 @@
 			- "--build", forces to build all the images from scratch, else uses the already built images
 		- "docker-compose down", will stop all the services and network, need to specify "-v" explicitly for removing the volumes as well
 		- "docker-compose build", just builds the images without starting them
+		- "docker-compose run svc_name cmds", will run the particular service and adds the args as similar to docker run command
 - Additional Docker important commands
 	- "docker exec cnt_name cmd"
 		- This execute additional commands on top of the running container
