@@ -28,4 +28,9 @@
 			- "--build", forces to build all the images from scratch, else uses the already built images
 		- "docker-compose down", will stop all the services and network, need to specify "-v" explicitly for removing the volumes as well
 		- "docker-compose build", just builds the images without starting them
-- 
+- Additional Docker important commands
+	- "docker exec cnt_name cmd"
+		- This execute additional commands on top of the running container
+	- "docker run flags cnt_name cmd"
+		- This particular command would override the CMD argument in the dockerfile
+		- But the command is appended to the ENTRYPOINT arguments in the dockerfile 
