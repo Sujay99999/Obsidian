@@ -5,9 +5,12 @@
 		- K8s is a defacto standard for the management of Containers
 		- So, we can write the K8s configuration for the containers, which can be used for any CSPs, or we can install the K8s on the bare metal which can take care of the services
 - Architecture
-	- Pod - Smallest possible unit for deployment, which can hold one/ more containers and its resources
+	- Pod 
+		- Smallest possible unit for deployment, which can hold one/ more containers and its resources
+		- Its a "shell" for the one/ more containers + Any required resources 
 	- Nodes
 		- These are the physical/ VMs which has certain hardware capacities
+		- We can have both master and worker node hosted onto same machine, but not recommended (Similar in the case of MiniKube)
 		- Worker Node
 			- The pods run in these worker-nodes. Hence we can run different pods as required
 			- One/ more pods can run on a single worker node, along with the necessary volumes and networking required for the pods
@@ -32,15 +35,19 @@
 	- Cluster
 		- The entirety of Worker nodes + Master Node forms the K8s cluster
 	- Services
-		- Logical set of pods, with a unique Pod/ Container independent IP address
+		- Logical set of pods, with a unique Pod/ Container independent IP address, so that they are exposed 
+	- Kubectl (Kube-Control)
+		- Tool for sending the instructions to the cluster
 - K8s vs infrastructure
 	- K8s wont create the infrastructure directly, instead developer has to 
 		- Provision Cluster (Master + Worker Nodes)
-			- CSPs also manage the provision of these nodes, but on a bare metal, we have take care of the provisioning
+			- CSPs also manage the provision of these nodes, but on a bare metal, we have take care of the provisioning (EKS)
 		- Setup the Kubelet and other required software
 		- Setup Load balancing features if required
 		- Setup File systems
+		- Managing the security for the K8s cluster
 	- Instead, K8s will
 		- Create the Pods and manage them
 		- Monitor the Pods and maintain the End-state
-		- 
+- Traditional K8s setup
+	- 
