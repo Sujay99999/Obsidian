@@ -1,0 +1,46 @@
+- Kubernetes
+	- Its an Container Orchestration service, which takes care oft,
+	- Simply put, K8s is like "Docker Compose" for multiple machine deployments
+	- CSPs such as Amazon ECS or other provide almost all the services provided with the Kubernetes, but the major advantage is that, Kubernetes prevents Vendor lock-in
+		- K8s is a defacto standard for the management of Containers
+		- So, we can write the K8s configuration for the containers, which can be used for any CSPs, or we can install the K8s on the bare metal which can take care of the services
+- Architecture
+	- Pod - Smallest possible unit for deployment, which can hold one/ more containers and its resources
+	- Nodes
+		- These are the physical/ VMs which has certain hardware capacities
+		- Worker Node
+			- The pods run in these worker-nodes. Hence we can run different pods as required
+			- One/ more pods can run on a single worker node, along with the necessary volumes and networking required for the pods
+			- Elasticity is achieved by scaling the pods within the worker nodes as well as the nodes themselves
+			- Apart from the Pods, the worker nodes also contain
+				- Docker software for running the containers
+				- Kubelet - Communication tool between worker node and the master node
+				- Kube-Proxy - Handles the Node and Pod traffic
+				- Worker Node Proxy/Config - Config of the specific node which determines the traffic and other attributes
+		- Master Node
+			- API Server
+				- Counter part for the Kubelet software on the worker nodes
+			- Scheduler
+				- Monitors the PODS and selects which worker node to exactly work on and communicates instructions to the API server
+			- Kube-Controller Manager
+				- Watches and controls the worker nodes
+			- Cloud-Controller Manager
+				- Specific Counterpart for the specific cloud provider to communicate the instructions
+			- Control Plane
+				- It controls the deployment i.e., The end state configuration required
+				- Contains multiple tools required for the deployment
+	- Cluster
+		- The entirety of Worker nodes + Master Node forms the K8s cluster
+	- Services
+		- Logical set of pods, with a unique Pod/ Container independent IP address
+- K8s vs infrastructure
+	- K8s wont create the infrastructure directly, instead developer has to 
+		- Provision Cluster (Master + Worker Nodes)
+			- CSPs also manage the provision of these nodes, but on a bare metal, we have take care of the provisioning
+		- Setup the Kubelet and other required software
+		- Setup Load balancing features if required
+		- Setup File systems
+	- Instead, K8s will
+		- Create the Pods and manage them
+		- Monitor the Pods and maintain the End-state
+		- 
