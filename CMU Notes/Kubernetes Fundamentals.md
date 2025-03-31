@@ -63,3 +63,11 @@
 		- Can pause/ stop or rollback the entire deployment
 		- Can auto scale dynamically based on rules
 		- This allows us to typically create pods, but not manually by us
+	- Service-Object
+		- Service objects helps to communicate with the pods created both internally and externally
+		- When a pod is created, its assigned with a local IP address, which changes, as they might be replaced
+		- Creating a service object, puts all the pods under a selected IP address which is then exposed to the outside world
+	- Important Commands
+		- kubectl create deployment <deployment_name> --image=<image_name>
+			- Creates an deployment object based on the image provided, which is then sent to the Master node, where the Scheduler and Kube-Controller picks the worker node and creates a pod, which internally runs the container with the given image
+			- We need to make sure that the image is pushed to some image registry, as the K8s cluster which is running on a VM has no way to use a locally created image
