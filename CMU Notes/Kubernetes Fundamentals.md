@@ -53,7 +53,10 @@
 - Traditional K8s setup (With Minkube)
 	- Imperative vs Declarative approach
 		- Imperative
-			- 
+			- In this way, we use individual commands to perform the operations
+		- Declarative
+			- We use a config file, which is directly applied, which provides the information about the desired state
+			- We create a deployment.yaml (name can be changed)
 	- Pod-Object
 		- Contains one or more containers
 		- Typically has shared volumes for all the pods
