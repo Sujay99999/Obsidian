@@ -60,7 +60,7 @@
 			- If we want to define different pods, we need different deployments
 				- The "spec" defines the details of the particular deployment.
 				- The "template" defines the Pod objects required in the deployment. (The metadata under the template, is for the Pod objects)
-				- The "spec" under the template defines how the pod is created
+				- The "spec" under the template defines how the pod is created.
 	- Pod-Object
 		- Contains one or more containers
 		- Typically has shared volumes for all the pods
