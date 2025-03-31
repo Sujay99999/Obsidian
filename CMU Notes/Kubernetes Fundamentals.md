@@ -6,7 +6,8 @@
 		- So, we can write the K8s configuration for the containers, which can be used for any CSPs, or we can install the K8s on the bare metal which can take care of the services
 - Architecture
 	- Pod 
-		- Smallest possible unit for deployment, which can hold one/ more containers and its resources
+		- Smallest possible unit for deployment, which can hold one/ more containers and its resources (Generally one container per pod)
+		- Pods are designed to be Ephemeral i.e., K8s will stop/ replace the pods as required, which leads to erasure of all the data
 		- Its a "shell" for the one/ more containers + Any required resources 
 	- Nodes
 		- These are the physical/ VMs which has certain hardware capacities
@@ -49,5 +50,16 @@
 	- Instead, K8s will
 		- Create the Pods and manage them
 		- Monitor the Pods and maintain the End-state
-- Traditional K8s setup
-	- 
+- Traditional K8s setup (With Minkube)
+	- Imperative vs Declarative approach
+		- Imperative
+			- 
+	- Pod-Object
+		- Contains one or more containers
+		- Typically has shared volumes for all the pods
+		- Each pod has an Cluster-internal IP address by default, and the multiple containers can talk to each other through localhost
+	- Deployment-Object
+		- Used to create the pods and control them, where we set a desired state, and this object takes care of the entire deployment
+		- Can pause/ stop or rollback the entire deployment
+		- Can auto scale dynamically based on rules
+		- This allows us to typically create pods, but not manually by us
