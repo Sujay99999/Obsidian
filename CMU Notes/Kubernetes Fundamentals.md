@@ -56,7 +56,11 @@
 			- In this way, we use individual commands to perform the operations
 		- Declarative
 			- We use a config file, which is directly applied, which provides the information about the desired state
-			- We create a deployment.yaml (name can be changed)
+			- We create a deployment.yaml (name can be changed), which is used to define the deployment object for the K8s cluster
+			- If we want to define different pods, we need different deployments
+				- The "spec" defines the details of the particular deployment.
+				- The "template" defines the Pod objects required in the deployment. (The metadata under the template, is for the Pod objects)
+				- The "spec" under the template defines how the pod is created
 	- Pod-Object
 		- Contains one or more containers
 		- Typically has shared volumes for all the pods
