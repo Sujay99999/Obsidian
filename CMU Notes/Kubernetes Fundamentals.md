@@ -59,8 +59,11 @@
 			- We create a deployment.yaml (name can be changed), which is used to define the deployment object for the K8s cluster
 			- If we want to define different pods, we need different deployments
 				- The "spec" defines the details of the particular deployment.
-				- The "template" defines the Pod objects required in the deployment. (The metadata under the template, is for the Pod objects)
+				- The "template" defines the Pod objects required in the deployment. (The metadata under the template, is for the Pod objects, which contains the labels for the deployment)
 				- The "spec" under the template defines how the pod is created.
+				- Selectors are very important for deployment, as they help in watching what specific pods have to be managed (Generally done with MatchLabels)
+			- Similarly we can define the service objects using "service.yaml", where we explicitly mention that "kind" is Service
+				- The Selector works little differently in the serviceSpec object
 	- Pod-Object
 		- Contains one or more containers
 		- Typically has shared volumes for all the pods
@@ -86,3 +89,4 @@
 			- Creates desired replicas with the load balancer in front of them
 		- kubectl set image deployment/<deployment_name> <container_name>=<updated_image_name>
 			- By default, the K8s will pick the new image if the tags are different only
+		- kubectl apply -f <deployment_file>
