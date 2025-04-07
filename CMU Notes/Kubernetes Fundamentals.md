@@ -81,7 +81,7 @@
 	- Important Commands
 		- kubectl create deployment <deployment_name> --image=<image_name>
 			- Creates an deployment object based on the image provided, which is then sent to the Master node, where the Scheduler and Kube-Controller picks the worker node and creates a pod, which internally runs the container with the given image
-			- We need to make sure that the image is pushed to some image registry, as the K8s cluster which is running on a VM has no way to use a locally created image
+			- We need to make sure that the image is pushed to some image registry, as the K8s cluster which is running on a VM has no way to use a locally created image, and also mention the ImagePullPolicy to always pick the image
 		- kubectl expose deployment <deployment_name> --port=<internal_port_to_be_exposed> --type=
 			- Type param tells about the type of service, where it can loadbalancer, clusterIP, NodePort, etc
 				- LoadBalancer provides an inbuilt load balancer, where the infrastructure has to provide it i.e., AWS or Minikube. NodePort allows us to provide our own load balancing solution
