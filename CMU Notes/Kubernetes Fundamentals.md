@@ -64,6 +64,7 @@
 				- Selectors are very important for deployment, as they help in watching what specific pods have to be managed (Generally done with MatchLabels)
 			- Similarly we can define the service objects using "service.yaml", where we explicitly mention that "kind" is Service
 				- The Selector works little differently in the serviceSpec object
+			- We can combine the service and deployment objects together into single file, but separate them by "---"
 	- Pod-Object
 		- Contains one or more containers
 		- Typically has shared volumes for all the pods
