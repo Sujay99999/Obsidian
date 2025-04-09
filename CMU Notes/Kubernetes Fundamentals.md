@@ -9,6 +9,7 @@
 		- Smallest possible unit for deployment, which can hold one/ more containers and its resources (Generally one container per pod)
 		- Pods are designed to be Ephemeral i.e., K8s will stop/ replace the pods as required, which leads to erasure of all the data
 		- Its a "shell" for the one/ more containers + Any required resources 
+		- Pod restart (where the containers are just simply restarted) is different from the Pod removal
 	- Nodes
 		- These are the physical/ VMs which has certain hardware capacities
 		- We can have both master and worker node hosted onto same machine, but not recommended (Similar in the case of MiniKube)
