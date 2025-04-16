@@ -4,3 +4,5 @@
 	- For advanced deployments, it uses a combination of Master node and other worker nodes (Jenkins slaves), which is used for parallel processing
 	- Each node has multiple executors which performs the jobs.
 	- Each of the nodes has a agent which simply manages the executors and the node, and they are the ones which talk to the master node
+- Installation and other misc
+	- Firstly locate the JENKINS_HOME as it contains the entire fs for all scripts
