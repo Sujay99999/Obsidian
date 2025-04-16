@@ -6,3 +6,10 @@
 	- Each of the nodes has a agent which simply manages the executors and the node, and they are the ones which talk to the master node
 - Installation and other misc
 	- Firstly locate the JENKINS_HOME as it contains the entire fs for all scripts
+
+
+
+- Project
+	- How do you enable the permissions requrired for jenkins (Check how to do it with docker as well)
+	- Setting path for jenkins
+	- How does the jenkins handle the workspace directory
