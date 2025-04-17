@@ -16,11 +16,16 @@
 		- Benefits
 			- Easier Deploybility 
 			- Better Availability and Reliability
-			- Modifiability and Reusability
+			- Modifiability and Reusability, having more independence on the service
 			- Scalability and Management 
 		- Challenges
 			- Performance, due to communication over network
 			- Deployability in terms of Devops POV
+			- Higher Memory footprint at runtime, due to re-usage of libraries
+			- Testability, especially for E2E tests
+			- Security
+				- Services in individual microservices generally communicate using HTTPS, or may Message brokers
+				- Generally, we perform IP Allowlisting, where we allow certain IP address in different environments
 	- Microservices vs Monolith
 		- The major difference is in the fact that these individual services are independently deployable. This deployment constraint is the major distinguishing factor
 		- Sometimes you can have more than one service in a single deployment unit as well
