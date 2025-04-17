@@ -13,6 +13,14 @@
 	- Microservices
 		- Its a SOA style, where you have multiple small services, where each of them are running in its own process, where they communicate using lightweight protocols such as HTTP
 		- The services in this single deployment unit must be cohesive in nature
+		- Benefits
+			- Easier Deploybility 
+			- Better Availability and Reliability
+			- Modifiability and Reusability
+			- Scalability and Management 
+		- Challenges
+			- Performance, due to communication over network
+			- Deployability in terms of Devops POV
 	- Microservices vs Monolith
 		- The major difference is in the fact that these individual services are independently deployable. This deployment constraint is the major distinguishing factor
 		- Sometimes you can have more than one service in a single deployment unit as well
