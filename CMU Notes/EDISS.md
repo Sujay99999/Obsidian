@@ -12,5 +12,10 @@
 		- Monolithic style also falls under the SOA, as we have different components such as DB, frontend, etc. which are deployed on different machines, which makes it distributed, but in most of the cases the backend services are clubbed together which is the monolith
 	- Microservices
 		- Its a SOA style, where you have multiple small services, where each of them are running in its own process, where they communicate using lightweight protocols such as HTTP
+		- The services in this single deployment unit must be cohesive in nature
+	- Microservices vs Monolith
 		- The major difference is in the fact that these individual services are independently deployable. This deployment constraint is the major distinguishing factor
 		- Sometimes you can have more than one service in a single deployment unit as well
+		- There is a subtle difference in Monolith having 2 services vs Microservices having 2 services
+			- In this case, even though the deployment unit is a single unit, but in case of monolith it is expected that the 2 services have less cohesion with other services
+- 
