@@ -29,6 +29,7 @@
 		- Types of Connectors
 			- Synchronous
 				- REST
+					- Stateless - Each req/ res are independent from each other
 				- RPC based (such as gRPC and Graphql)
 				- Component Based (such as EJB)
 			- Asynchronous
