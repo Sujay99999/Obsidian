@@ -24,8 +24,15 @@
 			- Higher Memory footprint at runtime, due to re-usage of libraries
 			- Testability, especially for E2E tests
 			- Security
-				- Services in individual microservices generally communicate using HTTPS, or may Message brokers
+				- Services in individual microservices generally communicate using HTTPS, or may Message brokers, which is synchronous and asynchronous
 				- Generally, we perform IP Allowlisting, where we allow certain IP address in different environments
+		- Types of Connectors
+			- Synchronous
+				- REST
+				- RPC based (such as gRPC and Graphql)
+				- Component Based (such as EJB)
+			- Asynchronous
+				- 
 	- Microservices vs Monolith
 		- The major difference is in the fact that these individual services are independently deployable. This deployment constraint is the major distinguishing factor
 		- Sometimes you can have more than one service in a single deployment unit as well
