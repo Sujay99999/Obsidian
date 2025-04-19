@@ -39,4 +39,6 @@
 		- Sometimes you can have more than one service in a single deployment unit as well
 		- There is a subtle difference in Monolith having 2 services vs Microservices having 2 services
 			- In this case, even though the deployment unit is a single unit, but in case of monolith it is expected that the 2 services have less cohesion with other services
-- 
+- Principles for Microservices
+	- Interface Segregation
+		- 
