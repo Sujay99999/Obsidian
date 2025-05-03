@@ -93,4 +93,8 @@
 			- By default, the K8s will pick the new image if the tags are different only
 		- kubectl apply -f <deployment_file>
 - Kubernetes Volumes
-	- 
+	- Using docker, the bind mounts or named volumes are very closely attached to the container, which persists even if the container is restarted, but with K8s, when ever there is a removal/ or restart of pod, there is a complete erasure of the volumes, as they are attached to containers, not to pod.
+	- We can attach volumes within the deployment file, under the specification of the containers, by adding an option of volumeMounts (very similar to docker compose file)
+	- K8s provides separate volumes which solves these problems. Some of the drivers which are provided are
+		- emptyDir
+			- There is an empty directory created that is attached to the pod. So, when there is a restart of the pod (containers get removed and recreated), then the volume persists, but if the pod is removed, then the directory gets removed entirely
