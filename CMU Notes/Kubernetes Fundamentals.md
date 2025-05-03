@@ -92,3 +92,5 @@
 		- kubectl set image deployment/<deployment_name> <container_name>=<updated_image_name>
 			- By default, the K8s will pick the new image if the tags are different only
 		- kubectl apply -f <deployment_file>
+- Kubernetes Volumes
+	- 
