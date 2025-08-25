@@ -98,3 +98,15 @@
 	- K8s provides separate volumes which solves these problems. Some of the drivers which are provided are
 		- emptyDir
 			- There is an empty directory created that is attached to the pod. So, when there is a restart of the pod (containers get removed and recreated), then the volume persists, but if the pod is removed, then the directory gets removed entirely
+
+
+- Helm
+	- Why ?
+		- Managing the content within the pods can be difficult, especially when they grow in size, where we are supposed to maintain multiple yaml files for different things such as Deployment, Service, Secrets, PVC and PV.
+		- Helm instead acts as an package manager for all the apps/ objects within the pods. It also acts as an Release manager, managing the upgrades of the apps
+			- helm install mysql
+			- helm uninstall mysql
+			- helm rollback mysql
+			- helm upgrade mysql
+	- How to Use ?
+		- Initially we link the bitnami repo to the cluster  - helm repo add bitnami <bitnami_url>
