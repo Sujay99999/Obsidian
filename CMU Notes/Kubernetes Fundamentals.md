@@ -102,11 +102,15 @@
 
 - Helm
 	- Why ?
-		- Managing the content within the pods can be difficult, especially when they grow in size, where we are supposed to maintain multiple yaml files for different things such as Deployment, Service, Secrets, PVC and PV.
+		- Managing the application within the pods can be difficult, especially when they grow in size, where we are supposed to maintain multiple yaml files for different things such as Deployment, Service, Secrets, PVC and PV.
 		- Helm instead acts as an package manager for all the apps/ objects within the pods. It also acts as an Release manager, managing the upgrades of the apps
 			- helm install mysql
 			- helm uninstall mysql
 			- helm rollback mysql
 			- helm upgrade mysql
 	- How to Use ?
-		- Initially we link the bitnami repo to the cluster  - helm repo add bitnami <bitnami_url>
+		- Initially we link the bitnami repo to the cluster 
+			- `helm repo add bitnami <bitnami_url>`
+		- And then add the required chart (i.e., application to be added)
+			- `helm install <our_name_to_chart> bitnami/<chart_name>`
+		- Once the chart is deployed, it is deployed as a release
