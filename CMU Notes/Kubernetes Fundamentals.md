@@ -114,3 +114,11 @@
 		- And then add the required chart (i.e., application to be added)
 			- `helm install <our_name_to_chart> bitnami/<chart_name>`
 		- Once the chart is deployed, it is deployed as a release
+
+
+
+
+
+
+- Trivia
+	- When you make any change to the helm config files except deployment and service, the `helm upgrade` doesn't pickup the changes, we are supposed to upgrade as well as trigger a manual restart of the pods
