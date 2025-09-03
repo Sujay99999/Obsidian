@@ -24,4 +24,15 @@
 		- Iteration 1: 8 bits for Network and 24 bits for hosts, which doesnt make sense
 		- Iteration 2: Class Based assignments
 			- First Bits help to identify the Class
-		- 
+			- Lot of Underutilization of address blocks
+		- Iteration 3:
+			- Usage of CIDR
+				- There is a flexible division between the network and host addresses
+				- Network prefix can be any size
+				- So, when we are having flexible address spaces, we should explicitly put the network size i.e., `/<number of network bits>`
+				- The Network prefix can also be represented as 32 bit mask, where all the network bits are 1, and host bits are 0
+- Routing
+	- So, the next problem is to understand how the packets are routed, where we use the routers, which forwards the packets based on the network prefix it holds to the next hop which is another router
+	- So, the forwarding node reduces the forwarding table size by aggregating the table entries it has by using the "Common prefixes" picked up from the destination address
+	- The IP address allocation is also done in a hierarchical order where ICANN > ARIN > ISPs > small institutions
+	- Routers basically use "Longest Matching Prefix" algorithm, as the longer the match, the closer it is to the host
