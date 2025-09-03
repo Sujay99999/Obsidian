@@ -1,0 +1,18 @@
+- How do we actually send/ forward the packets from the source to destination
+	- How do we identify nodes? (Addressing Problem)
+	- How do the messages get routed from one node to another (Routing Problem)
+- Addressing
+	- There are two major types of addressing
+		- Flat Addressing
+			- Unique identifier
+			- The way the identifier is designed may not be used for routing
+			- Used in MAC addresses within the LAN
+			- > 281 trillion unique addresses, where this 48bit address is boiled into the equipment
+		- Hierarchical Addressing
+			- Has a structure such a way it can be used for routing, like phone numbers
+			- IP addresses which are used in WAN (32 bit identifier)
+- Single Line Ethernet vs Switched Ethernet
+	- Single line is the old fashioned one where all the devices are connected across, which is not scalable
+	- Switched Ethernet uses Switches as a major component which has a lot of ports, where the data comes at a particular port, and redirected into some port
+		- The control processor within the switch basically routes the data based on the "Forwarding Table", which is a mapping of "MAC addresses to Port numbers"
+		- And again this faces the problem of Flat addressing, which makes it not scalable
