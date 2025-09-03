@@ -36,3 +36,19 @@
 	- So, the forwarding node reduces the forwarding table size by aggregating the table entries it has by using the "Common prefixes" picked up from the destination address
 	- The IP address allocation is also done in a hierarchical order where ICANN > ARIN > ISPs > small institutions
 	- Routers basically use "Longest Matching Prefix" algorithm, as the longer the match, the closer it is to the host
+	- The forwarding tables are populated based on different metrics
+		- LANs generally use Broadcasting, learning
+		- WANs uses BGP (Border Gateway Protocol)
+
+- Transport Layer helps us to support multiple applications using "Process Multiplexing" using ports
+	- TCP
+		- It is a protocol which is reliable, In-order and two-way byte stream service
+		- It has Flow control, Error control, Congestion Control
+		- In Order delivery
+			- Uses the concept of "Stop and Wait" where it sequences the packets and expects the receiver to send out the ACKs.
+			- It also uses the idea of "Retransmission after timeout" to recover from Packet error, and the timer has to be more conservative as possible
+				- Estimated based on the RTT (Round Trip Time)
+			- We can improve this throughput with "Sliding Window", where the sliding window size is determined based on the buffer size
+			- Packet drops are tricky as the protocol creates space for dropped packets to be added in the next batch transmission
+		- Congestion Control
+			- We use a congestion control algorithm called CCA, which is a conservative way of maintaining the size
