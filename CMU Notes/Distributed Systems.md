@@ -16,3 +16,12 @@
 	- Switched Ethernet uses Switches as a major component which has a lot of ports, where the data comes at a particular port, and redirected into some port
 		- The control processor within the switch basically routes the data based on the "Forwarding Table", which is a mapping of "MAC addresses to Port numbers"
 		- And again this faces the problem of Flat addressing, which makes it not scalable
+- IP addresses
+	- Its a 32 bit address
+	- It has 2 components, where first 23 bits are (Network component), and the 9 bits are (Host Component)
+	- The IP addresses are assigned using a protocol called DHCP
+	- IP Address design
+		- Iteration 1: 8 bits for Network and 24 bits for hosts, which doesnt make sense
+		- Iteration 2: Class Based assignments
+			- First Bits help to identify the Class
+		- 
