@@ -4,10 +4,12 @@
 	- Internet is Asynchronous, making us to deal with Stale data
 	- Internet must Handle failures at scale
 - Internet is all about designing the protocols
-- Layer 1
-	- This is the layer where we send the bits across the air
-	- Can be done either
-- Layer 2
-	- We use physical technology to create links which transfer packets
-- Layer 3
-	- 
+- Need of Headers
+	- Packet Header
+		- Contains the metadata, which contains the Source and the destination address
+		- The data is stored in the payload
+	- Headers are standardized in terms of the format
+	- Headers are wrapped on top of the existing payload as we move down the levels and in the reverse fashion
+	- Different layers use different layering schemes
+	- When a packet passes through multiple hops, the packet headers at the Layer 2 are changed accordingly based on the forwarding tables it has.
+- End hosts must implement all the layers on OSI model, where as te 
