@@ -1,0 +1,13 @@
+- Challenges of Internet
+	- Internet operates at an enormous scale
+	- Internet must handle diverse uses of applications
+	- Internet is Asynchronous, making us to deal with Stale data
+	- Internet must Handle failures at scale
+- Internet is all about designing the protocols
+- Layer 1
+	- This is the layer where we send the bits across the air
+	- Can be done either
+- Layer 2
+	- We use physical technology to create links which transfer packets
+- Layer 3
+	- 
