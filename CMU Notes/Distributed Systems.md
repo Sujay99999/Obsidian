@@ -52,3 +52,11 @@
 			- Packet drops are tricky as the protocol creates space for dropped packets to be added in the next batch transmission
 		- Congestion Control
 			- We use a congestion control algorithm called CCA, which is a conservative way of maintaining the size
+
+
+
+
+
+- Exam NOtes
+	- mut ex vs others - know stuff
+	- concurrency
