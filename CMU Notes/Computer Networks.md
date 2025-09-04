@@ -12,4 +12,6 @@
 	- Headers are wrapped on top of the existing payload as we move down the levels and in the reverse fashion
 	- Different layers use different layering schemes
 	- When a packet passes through multiple hops, the packet headers at the Layer 2 are changed accordingly based on the forwarding tables it has.
-- End hosts must implement all the layers on OSI model, where as te 
+- End hosts must implement all the layers on OSI model, where as the routers/ switches will not implement all the layers
+	- So, the routers and switches unwraps only until layer 3 or 2, and wraps again with new data for the layers.
+- Layer 4-7 are built for reliability for the data transfer implemented using the Layer 1-3
