@@ -29,6 +29,7 @@
 				- Monitors the PODS and selects which worker node to exactly work on and communicates instructions to the API server
 			- Kube-Controller Manager
 				- Watches and controls the worker nodes
+				- Also handles the Replication process, makes sure that the pods are being autoscaled as required
 			- Cloud-Controller Manager
 				- Specific Counterpart for the specific cloud provider to communicate the instructions
 			- Control Plane
