@@ -19,7 +19,7 @@
 			- Elasticity is achieved by scaling the pods within the worker nodes as well as the nodes themselves
 			- Apart from the Pods, the worker nodes also contain
 				- Docker software for running the containers
-				- Kubelet - Communication tool between worker node and the master node
+				- Kubelet (Deamon) - Communication tool between worker node and the master node
 				- Kube-Proxy - Handles the Node and Pod traffic
 				- Worker Node Proxy/Config - Config of the specific node which determines the traffic and other attributes
 		- Master Node
