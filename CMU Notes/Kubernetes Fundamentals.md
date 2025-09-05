@@ -42,7 +42,7 @@
 	- Kubectl (Kube-Control)
 		- Tool for sending the instructions to the cluster
 - K8s vs infrastructure
-	- K8s wont create the infrastructure directly, instead developer has to 
+	- K8s wont create the infrastructure directly, instead developer has to [
 		- Provision Cluster (Master + Worker Nodes)
 			- CSPs also manage the provision of these nodes, but on a bare metal, we have take care of the provisioning (EKS)
 		- Setup the Kubelet and other required software
