@@ -56,6 +56,11 @@
 
 
 
+- Go Language
+	- GoRoutines
+	- Channels
+	- 
+
 
 - Exam NOtes
 	- mut ex vs others - know stuff
