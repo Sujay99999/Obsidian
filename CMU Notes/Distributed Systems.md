@@ -56,28 +56,7 @@
 
 
 
-- Go Language
-	- Generally, we expect the code to be linearly run, where if a piece of code is blocking the execution, the compiler simply waits for it to complete the execution. Goroutines solve this problem by making them run parallely
-	- GoRoutines
-		- We can fork a piece of code to run using the keyword "go" infront of the function call, which allows the original code execution to continue
-		- Since if we spawn off a function asynchronously using goroutines, then we might have a case where the main function completes execution before completing the async functions which can terminate the program
-		- Go language follows a concurrency model called "Fork and Join model", where when the main program spwans off a new child process, it expects us to also make sure to join it back to the main process when the execution is completed.
-		- The main function is also a "Goroutine"
-	- Channels
-		- Channels help us to implement this "join operation", where the child processes can read the data which is shared across the goroutines.
-		- In this example,
-		  ```
-		  func main(){
-			  myChannel := make(chan string)
-			  
-			  go func(){
-				  myChannel <- "data"
-			  }()
-			  msg := <- myChannel
-			  fmt.Println(msg)
-		  }
-		  ```
-		  - As we can see the `msg := <- myChannel` line acts as the code that is blocking the main goroutine, as it waits the channel to either have some data in it or get closed, which only happens, when the `func` anonymous goroutine gets completed
+GoLang: [[GoLang with Multithreading concepts]]
 
 
 - Exam NOtes
