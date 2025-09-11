@@ -14,4 +14,23 @@
 	- When a packet passes through multiple hops, the packet headers at the Layer 2 are changed accordingly based on the forwarding tables it has.
 - End hosts must implement all the layers on OSI model, where as the routers/ switches will not implement all the layers
 	- So, the routers and switches unwraps only until layer 3 or 2, and wraps again with new data for the layers.
-- Layer 4-7 are built for reliability for the data transfer implemented using the Layer 1-3
+- Layer 4-7 are built for reliability for the data transfer implemented using the Layer 1-3, because Layer 3 only offers "Best Effort Delivery"
+- Internet Design Principles
+	- Decentralized Protocol
+		- Each device operating on its own, where we dont have central mastermind
+	- Best-Effort Service Model
+		- Since Layer 3 doesn't guarantee that the packets are delivered
+	- Route around trouble
+		- Making sure that network is resilient to failures
+	- Dumb infrastructure
+		- Routers simply route the packets, where they are dumb enough to not check the insides of the packet
+	- End-to-end principle
+		- Layer 4 to 7 are only implemented in the end hosts, not the routers or switches
+	- Layering
+		- Layering in OSI stack provides us with abstraction, which makes development easier
+	- Federation via Narrow-waist interface
+		- This says that Layer 3 only acknowledges the IP protocol
+		- Other layers such as Layer 4 and 7 are decided between the hosts, and layers 1 and 2 are decided between routers
+			- We can establish communication with SMTP (7), TCP (4), Ethernet (2) and Copper wires (1), but Layer 3 stays same
+		- If layer 3 uses some other protocol than IP, such as bluetooth, then it is not a part of the Internet
+		- Demutliplexing
