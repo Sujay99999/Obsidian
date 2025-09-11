@@ -1,0 +1,2 @@
+- Prerequisites
+	- Write a terraform file to setup the cluster, where we already use the same ssh keys created from the jumpbox
