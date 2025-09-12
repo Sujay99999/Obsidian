@@ -26,6 +26,8 @@
 		- Routers simply route the packets, where they are dumb enough to not check the insides of the packet
 	- End-to-end principle
 		- Layer 4 to 7 are only implemented in the end hosts, not the routers or switches
+		- We cant simply rely on the routers to provide the correctness of the data transmission as they can be faulty at any point of time. Instead it is the job of the end host to make sure that it recieves all the required packets
+			- We can
 	- Layering
 		- Layering in OSI stack provides us with abstraction, which makes development easier
 	- Federation via Narrow-waist interface
@@ -33,4 +35,9 @@
 		- Other layers such as Layer 4 and 7 are decided between the hosts, and layers 1 and 2 are decided between routers
 			- We can establish communication with SMTP (7), TCP (4), Ethernet (2) and Copper wires (1), but Layer 3 stays same
 		- If layer 3 uses some other protocol than IP, such as bluetooth, then it is not a part of the Internet
-		- Demutliplexing
+		- Demultiplexing
+			- De-multiplexing helps layer 3 to understand to which protocol it needs to send on Layer 4, and similarly for Layer 4, this helps in sending the data at the right ports i.e., individual applications
+		- Implementation of Layers on Host
+			- Layer 1 and 2 are in the hardware, such as on NIC
+			- Layer 3 and 4 exist on the OS, implemented within the software
+			- Layer 7 exist on the application
