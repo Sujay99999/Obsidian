@@ -46,4 +46,6 @@
 		- There are 2 ways to do that 
 			- Static Allocation: Each flow has a static resource allocation
 			- Statistical multiplexing: Dynamically allocates to users based on the demand
-	- Statistical multiplexing
+	- Statistical multiplexing can be simply defined Peak of Aggregate demand < Aggregate of peak demands
+	- Types of multiplexing
+		- 
