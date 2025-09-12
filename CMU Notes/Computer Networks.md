@@ -26,8 +26,8 @@
 		- Routers simply route the packets, where they are dumb enough to not check the insides of the packet
 	- End-to-end principle
 		- Layer 4 to 7 are only implemented in the end hosts, not the routers or switches
-		- We cant simply rely on the routers to provide the correctness of the data transmission as they can be faulty at any point of time. Instead it is the job of the end host to make sure that it recieves all the required packets
-			- We can
+		- We cant simply rely on the routers to provide the correctness of the data transmission as they can be faulty at any point of time. Instead it is the job of the end host to make sure that it receives all the required packets
+			- We can break this rule for performance that is if we have enable routers to check the packets dropped, and it automatically send duplicate packets, then it can improve the performance, but the end host shouldnt depend on the router for data correctness
 	- Layering
 		- Layering in OSI stack provides us with abstraction, which makes development easier
 	- Federation via Narrow-waist interface
@@ -41,3 +41,9 @@
 			- Layer 1 and 2 are in the hardware, such as on NIC
 			- Layer 3 and 4 exist on the OS, implemented within the software
 			- Layer 7 exist on the application
+- Statistical multiplexing
+	- Before understanding the multiplexing, we should how do we share resources between different data transfers i.e., you cant have single router for each of the data flows, instead you are supposed to share them
+		- There are 2 ways to do that 
+			- Static Allocation: Each flow has a static resource allocation
+			- Statistical multiplexing: Dynamically allocates to users based on the demand
+	- Statistical multiplexing
