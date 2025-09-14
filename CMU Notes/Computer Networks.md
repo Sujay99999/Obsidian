@@ -71,3 +71,21 @@
 		- In summary, Circuit switching provides better performance on the required bandwidth and becomes much more predictable for the developers, where as the Packet switching ism more efficient, reliable and fault tolerant
 - Links
 	- Properties of Links
+		- There are 3 main properties of Links to capture the performance
+			- Bandwidth
+				- Number of bits we can send through the link in 1 sec
+			- Propagation Delay 
+				- Amount of time taken for an individual bit to travel from the sender to the receiver
+				- Sometimes, latency is also referred as the propagation delay
+			- BDP - Bandwidth propagation delay
+				- It is the cross product of the bandwidth and the propagation delay
+	- Time Delay
+		- Calculate total time to transfer 800 bit packet through a link which can support 1Mbps == 1 million bits per second bandwidth and and propagation delay of 1ms
+			- For the first bit to be transferred, it takes (1/1 million)` i.e., bandwidth` + (1ms), so totaling 0.001001 seconds
+			- Similarly for the second bit to transfer it takes 0.001002 seconds in total, assuming that it gets sent after the first bit
+			- Hence for all the 800 bits to be sent, it takes 0.0018 seconds i.e., 1.8ms
+		- The time taken for a packet to be transferred known as **Packet Delay** can be said as `Time Delay = Transmission Delay + Propagation Delay`
+		- Transmission delay is calculated as `Packet size/ Bandwidth`
+		- So, **Time Delay** is a function which depends two properties i.e., bandwidth and propagation delay
+		- If the packet size is big, bandwidth plays a big role, else propagation delay
+	- 
