@@ -67,3 +67,7 @@
 		- Fault tolerance
 			- Packet Switching handles failures than Circuit switching, as any fault in middle nodes requires the end hosts have to re-establish the circuit
 		- Complexity
+			- Packet switching is easier to implement, as they don't require to keep track of the reservations
+		- In summary, Circuit switching provides better performance on the required bandwidth and becomes much more predictable for the developers, where as the Packet switching ism more efficient, reliable and fault tolerant
+- Links
+	- Properties of Links
