@@ -88,4 +88,6 @@
 		- Transmission delay is calculated as `Packet size/ Bandwidth`
 		- So, **Time Delay** is a function which depends two properties i.e., bandwidth and propagation delay
 		- If the packet size is big, bandwidth plays a big role, else propagation delay
-	- 
+	- Overloaded links
+		- Sometimes, the router gets a huge influx of incoming packets, where the router tries to maintain a queue order for the packets that are sent, but if the queue overflows, it leads to dropping of the packets.
+		- Hence, the new `Time Delay = Transmission Delay + Propagation Delay + Router Queuing Delay`
