@@ -47,5 +47,23 @@
 			- Static Allocation: Each flow has a static resource allocation
 			- Statistical multiplexing: Dynamically allocates to users based on the demand
 	- Statistical multiplexing can be simply defined Peak of Aggregate demand < Aggregate of peak demands
-	- Types of multiplexing
-		- 
+	- Types of implementations for statistical multiplexing
+		- Circuit Switching
+			- End hosts reserve the resources used for data transfer before beginning, and release them after the transfer is completed
+			- Initially, the sender sends a reservation request to the receiver, and all the routers along the way basically accept the request and set aside the requested bandwidth for this
+			- After completion, the sender again sends the tear request to release the resources across the circuit formed
+			- The difference between static allocation and circuit switching is circuit allocation is similar to reservation of resources for some time.
+		- Packet Switching
+			- In this approach, each of the packets flow independently depending the current usage of the routers
+			- Tries to reach Best effort delivery using this approach
+	- Which of them is better
+		- Abstraction
+			- Circuit switching is more convenient as you get a guarantee of the resources
+		- Efficiency
+			- Packet Switching is more efficient than Circuit Switching
+				- Requires a lot of time for sending the reservation and teardown requests
+				- **Bursty traffic** can lead to wasted resources
+				- **Consistent traffic**, perform with equal efficiency for both methods
+		- Fault tolerance
+			- Packet Switching handles failures than Circuit switching, as any fault in middle nodes requires the end hosts have to re-establish the circuit
+		- Complexity
