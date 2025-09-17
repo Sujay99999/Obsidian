@@ -57,14 +57,32 @@
 
 - Time/ Clock Synchronization
 	- Coordination of the processes in much important in multiprocessor/ distributed systems than compared to uniprocessor/ centralized systems
-	- Physical clocks
-		- The crystal basically oscillates at a frequency such that each of the oscillation decrements the counter by one, and when the counter reduces to zero, an interrupt is generated. Each interrupt is called "One Clock tick"
-		- We have different clocks running at different oscillations, making them out of sync and this difference is known as "Clock Skew"
+- Physical clocks
+	- The crystal basically oscillates at a frequency such that each of the oscillation decrements the counter by one, and when the counter reduces to zero, an interrupt is generated. Each interrupt is called "One Clock tick"
+	- We have different clocks running at different oscillations, making them out of sync and this difference is known as "Clock Skew"
+	- This clock drift which is the difference between actual time and the current time per unit of time is called "Clock drift rate"
 	- Physical clocks basically raise 2 questions:
 		- How can we keep the clocks within the software in sync with the accurate physical clock?
 		- How do we synchronize the clocks with each other
 	- How can we keep the clocks within the software in sync with the accurate physical clock?
-		- T
+		- The answer is "Clock Synchronization Algorithms"
+			- The goal of the clock synchronization algorithm is to keep the deviation between the respective clocks of any two machines within a specified bound
+			- Some of the algorithms are "Cristian's Time Sync" and "Berkeley Algorithm", which have their own shortcomings
+			- NTP (Network Time Protocol)
+				- The protocol uses "Hierarchy pattern", where it divides the servers into strata, where the server with the actual clock is called as "Stratum 1 server", and a server updates its clock only when it receives the updated time from a server of higher strata
+				- Have to be built so that it is reliable and scalable
+- Logical Clocks
+	- Logical clocks works completely different as it says that "Distributed systems need not rely on the actual source of truth for their clocks, instead they have to agree on the order in which the events occur"
+	- Lamport's Logical Clocks
+		- If `a` and `b` are events in the same process, and `a` occurs before `b`, then `a->b` is true. The relation is called "happened-before" which is a transient relation
+		- If `a` is a event of sending data from `process 1`, and `b` is the event of the receiving the data by `process 2`, then `a->b` is also true
+		- if `a->b` and `b->c`, then `a->c` as the events are concurrent
+		- So, lamport clock says that each process `p(i)` has a logical clock `l(i)`, then
+			- `l(i)` is incremented by 1 before each event at `p(i)`
+			- when `p(j)` receives the data from `p(i)` as `(data, t)`, then we synchronize the logical clock as `l(j) = Max(l(j), t)` ![[Screenshot 2025-09-16 at 8.32.02 PM.png]]
+		- One of the short comings of lamport clocks is, if `e -> e'`, then `l(e) < l(e')` but if `l(e) < l(e')` , it doesn't imply `e -> e'`.
+		- Total Order Multicast Lamport Clocks
+			- 
 
 GoLang: [[GoLang with Multithreading concepts]]
 
