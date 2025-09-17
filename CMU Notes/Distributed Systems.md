@@ -116,8 +116,16 @@
 		- Coordinator is single point of failure
 		- Coordinator can become a performance bottleneck
 - Bully Leader Election Algorithm
-	- As we have seen th
-
+	- As we have seen that having a single coordinator can be a single point of failure, hence we require something on top of the Centralized algorithm to make sure that the coordinator is always up and running
+	- We assume that each of the process can be identifiable with unique id `P`
+	- The aim of the this algorithm is to locate the process with highest id and designate it as the leader
+	- How it works
+		- Step 1: Out of 7 processes from `P1 to P7`, we initially have `P7` as the leader and it crashes
+		- Step 2: Randomly `P4` finds that `P7` is not running in one of the exchanges and sends out a `Election` message to higher processes i.e., `P5, P6 and P7` 
+		- Step 3: `P5 and P6` being alive respond back to `P4` with OK
+		- Step 4: Seeing this `P5 and P6` send `Election` message to higher processes immediately
+		- Step 5: Since `P6` doesn't get a response from `P7`, it assumes as the new coordinator and sends out an `New Leader` message to all other processes
+- 
 
 
 
