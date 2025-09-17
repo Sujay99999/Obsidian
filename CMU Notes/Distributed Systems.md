@@ -83,9 +83,28 @@
 		- One of the short comings of lamport clocks is, if `e -> e'`, then `l(e) < l(e')` but if `l(e) < l(e')` , it doesn't imply `e -> e'`.
 	- Vector clocks
 		- Since we understood that Lamport clocks only provide partial causality, we require better mechanisms to obtain stronger casualty relation between 2 events
-		- So, now instead of passing on the logical clock as the "Single counter of the respective process", we pass the "Casual history of all processes" at each transfer i.e., we 
+		- So, now instead of passing on the logical clock as the "Single counter of the respective process", we pass the "Casual history of all processes" at each transfer
+		- The same piggybacking rules of lamport clocks apply as well![[Screenshot 2025-09-16 at 9.26.58 PM.png]]
 	- Total Order Multicast Lamport Clocks
-			- 
+		- Lamport and vector clocks deal with synchrnoization between independent processes, where as when we scale this idea to distributed systems (especially for **replicated systems**), we get "Total Order Multicast"
+		- This involves a "Multicast operation" by which **All messages are delivered in the same order to each receiver**.
+			- Step 1: `Process A` i.e., sender starts by multicasting the messages to each other, where it sends the "Logical time" of the sender.
+			- Step 2: `Process B` i.e., receiver gets the message and puts it onto local queue and sort the queue based on the timestamp
+			- Step 3: Receiver again multicasts the acknowledgement to all others
+		- Eventually all the members with have the same copy if the local queue
+		- A process can deliver the queued message to the application layer only when it has been acknowledged by all other members ensuring safe replication of actions across different systems
+		- Total Order Multicast with vector clocks provide more guarantee on the causality but has unnecessary overhead of data
+
+
+
+- Mutual exclusion algorithms
+	- Why do we need them
+		- 
+
+
+
+
+
 
 GoLang: [[GoLang with Multithreading concepts]]
 
