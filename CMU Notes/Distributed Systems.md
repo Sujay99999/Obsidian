@@ -55,8 +55,16 @@
 
 
 
-- Time/ Clock Synchrnoization
-	- 
+- Time/ Clock Synchronization
+	- Coordination of the processes in much important in multiprocessor/ distributed systems than compared to uniprocessor/ centralized systems
+	- Physical clocks
+		- The crystal basically oscillates at a frequency such that each of the oscillation decrements the counter by one, and when the counter reduces to zero, an interrupt is generated. Each interrupt is called "One Clock tick"
+		- We have different clocks running at different oscillations, making them out of sync and this difference is known as "Clock Skew"
+	- Physical clocks basically raise 2 questions:
+		- How can we keep the clocks within the software in sync with the accurate physical clock?
+		- How do we synchronize the clocks with each other
+	- How can we keep the clocks within the software in sync with the accurate physical clock?
+		- T
 
 GoLang: [[GoLang with Multithreading concepts]]
 
