@@ -81,7 +81,10 @@
 			- `l(i)` is incremented by 1 before each event at `p(i)`
 			- when `p(j)` receives the data from `p(i)` as `(data, t)`, then we synchronize the logical clock as `l(j) = Max(l(j), t)` ![[Screenshot 2025-09-16 at 8.32.02 PM.png]]
 		- One of the short comings of lamport clocks is, if `e -> e'`, then `l(e) < l(e')` but if `l(e) < l(e')` , it doesn't imply `e -> e'`.
-		- Total Order Multicast Lamport Clocks
+	- Vector clocks
+		- Since we understood that Lamport clocks only provide partial causality, we require better mechanisms to obtain stronger casualty relation between 2 events
+		- So, now instead of passing on the logical clock as the "Single counter of the respective process", we pass the "Casual history of all processes" at each transfer i.e., we 
+	- Total Order Multicast Lamport Clocks
 			- 
 
 GoLang: [[GoLang with Multithreading concepts]]
