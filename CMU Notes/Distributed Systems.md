@@ -99,7 +99,24 @@
 
 - Mutual exclusion algorithms
 	- Why do we need them
-		- 
+		- These algorithms help us to solve the "Critical problem of Coordinating access to shared resources with multiple processes or nodes"
+		- In a single computer system, we use the concepts of semaphores which acts like a "Shared memory" across the entire computer, but in case of distributed systems, we dont have "Global Shared memory"
+- Centralized algorithm
+	- One process is elected as an "Coordinator" which handles the mutual exclusivity, where it allows only one process to access the resource
+	- How it works
+		- Step 1: `P1` wants to access the resource, it sends a request message to the coordinator
+		- Step 2: Permission is granted to `P1`, and replies to `P1` with OK message but at the same time `P2` also asks for the resource
+		- Step 3: Coordinator doesnt respond at all, but it also adds `P2` onto its internal queue
+		- Step 4: When `P1` completes its work, it again sends a RELEASE message to coordinator
+		- Step 5: The coordinator sees the first process on the queue and sends the OK message to it
+	- Best parts
+		- Fair to all the processes, doesnt let anyone starve
+		- Easy implementation, as it only use 3 messages (Request, Ok, Release)
+	- Shortcomings
+		- Coordinator is single point of failure
+		- Coordinator can become a performance bottleneck
+- Bully Leader Election Algorithm
+	- As we have seen th
 
 
 
