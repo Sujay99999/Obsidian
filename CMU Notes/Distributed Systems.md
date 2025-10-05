@@ -128,6 +128,12 @@
 	- Total Order Multicast with vector clocks provide more guarantee on the causality but has unnecessary overhead of data
 
 
+- Fault tolerance 
+- only bkward recovery alogs
+	- checkpointing - chandy lamport 
+	- logging
+- 
+
 
 
 
