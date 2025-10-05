@@ -160,7 +160,8 @@
 		- SMR
 		- Understand why consensus is impossible, what is liveness an safety in FLR
 - Paxos algo
-	- What is it solving
+	- What is it solving i.e., when a value is choosen
+	- How a quorum is formed in first place
 
 
 
