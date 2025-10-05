@@ -149,6 +149,11 @@
 	- how wal is implmented in dbs
 	- come back to this example after completing the 2pc and how atomicity is actually maintained
 	- Understand on how the checkpointing and logging complement each other
+- can we use bkd recovery algos during failures
+- distributed consistency vs acid consistency
+- types of consistency
+	- Strict consistency
+	- sequential consistency
 
 
 
