@@ -142,7 +142,13 @@
 		- independent checkpointing --  and how it leads to global checkpointing
 		- How recovery is done in independent checkpointing
 		- How coordinated checkpointing works - chandy lamport 
-			- How snapshot is initiated
+			- How snapshot is initiated, continued, and terminated
+			- algo slide
+- logging
+	- WAL
+	- how wal is implmented in dbs
+	- come back to this example after completing the 2pc and how atomicity is actually maintained
+	- Understand on how the checkpointing and logging complement each other
 
 
 
