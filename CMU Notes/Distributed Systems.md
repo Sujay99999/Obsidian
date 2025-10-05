@@ -132,7 +132,17 @@
 - only bkward recovery alogs
 	- checkpointing - chandy lamport 
 	- logging
-- 
+- assunptions for bkd recovery algos
+- checkpointing algo
+	- que - how do we take a snapshot of a dist sys
+	- what is the basic intuition we build
+	- how do we apply the logic to dist sys now ?
+	- what is consistent snapshot, and how is it connected with lamport implies 
+	- token transistion example
+		- independent checkpointing --  and how it leads to global checkpointing
+		- How recovery is done in independent checkpointing
+		- How coordinated checkpointing works - chandy lamport 
+			- How snapshot is initiated
 
 
 
