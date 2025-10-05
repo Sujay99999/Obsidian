@@ -151,12 +151,16 @@
 	- Understand on how the checkpointing and logging complement each other
 - can we use bkd recovery algos during failures
 - distributed consistency vs acid consistency
-- types of consistency
+- types of consistency (understand the semantics)
 	- Strict consistency
 	- sequential consistency
 		- Check wdtm by global order cannot reorder the local order of operations
-- 
-
+	- Casual consistency
+		- Understand what exactly is casual writes vs concurrent writes
+		- SMR
+		- Understand why consensus is impossible, what is liveness an safety in FLR
+- Paxos algo
+	- What is it solving
 
 
 
