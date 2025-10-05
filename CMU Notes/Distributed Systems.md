@@ -154,6 +154,8 @@
 - types of consistency
 	- Strict consistency
 	- sequential consistency
+		- Check wdtm by global order cannot reorder the local order of operations
+- 
 
 
 
