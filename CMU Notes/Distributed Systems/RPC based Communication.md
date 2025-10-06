@@ -1,0 +1,11 @@
+- RPC Communiccation
+	- how do we make the computation easier in the dist sys - very important
+	- how rpc are made transparent - check this again
+	- distributed transparency has diff meaning
+	- checkout RPC package in go
+		- Basic implementation
+		- Stubs and IDLs
+	- RPC code flow
+	- Issues with RPC
+		- Cant pass pointers
+	- How do we make partial failures transparent to client
