@@ -144,6 +144,9 @@
 		- How coordinated checkpointing works - chandy lamport 
 			- How snapshot is initiated, continued, and terminated
 			- algo slide
+- Chandy lamport coordinated checkpointing algorithm
+	- What is tries to say
+		- For any event that is recorded somewhere in the snapshot, any events that happened before that particular event is also recorded in that snapshot
 - logging
 	- WAL
 	- how wal is implmented in dbs
