@@ -1,0 +1,25 @@
+- In any kind of distributed systems, replication is important for improving scalability and reliability of the system. Replication also comes with a cost i.e., consistency between the replicated data.
+- What is Tight/ Strict consistency and why Cant we achieve it
+	- Whenever there is any kind of update operation performed on a system replicated for N times, we have to make sure that the update is propagated across all of the N systems.
+	- The update operation is performed on all the copies as an **Single Atomic Operation**
+	- This replication is generally difficult to implement across a large scale network
+	- The only way to solve this is to *Relax the consistency constraints*
+- Data centric consistency models
+	- It is essentially a contract between *processes and the data store i.e., any kind of shared database, shared memory, etc*, which says that consistency is maintained between the data stores and the processes related to it
+	- Some of the models are 
+		- Sequential consistency
+		- Casual consistency
+		- Entry consistency
+> Notation for consistnecy models
+	- The time axis is always drawn horizontally, with time increasing from left to right. 
+	- Notation Wi (x)a to denote that process Pi writes value a to data item x. 
+	- Notation, Ri (x)b represents the fact that process Pi reads x and is returned the value b.
+	- We assume that each data item has an initial value NIL
+- Sequential consistency
+	- A data store is said to be *Sequentially consistent*, if the operations by all the processes were execured in some single valid global seqentual order
+	- Implementing this kind of *Linearizability* on a many-core architecture casues many performance issues.
+- Causal consistency
+	- This is a much more weaker consistency model than the sequential consistency
+	- It says that *All the writes that are causally related must be seen in the same order by all the processes, where as the concurrent writes may be seen ina a different order*![[Screenshot 2025-10-06 at 11.57.45 PM.png]]
+- Entry consistency [TODO]
+- Eventual consistency [TODO]
