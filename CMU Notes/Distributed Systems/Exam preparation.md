@@ -4,4 +4,76 @@ Midsem 1
 - Previous year question papers
 - Logistics
 	- intro
-		- 
+
+
+- Distributed File System [Part 1 and Part 2]
+	- AFS is more about scaling as much as possible and NFS is more about the reliability
+	- We can different filesystems designed based on different workload philosophies
+	- AFS
+		- Design goal: Scale to support tens os thousands of users
+		- Strategy: Aggressive caching, whole file operations
+		- Consistency approach: Server basically sends callbacks to notify the clients of the changes
+		- Caches the entire files as units
+		- Wasteful for small edits to large files + Losing local changes when caches are overwritten
+		- Better for consistency
+	- NFS
+		- Design goal: Simple, ROBUST file system
+		- Strategy: Stateless server + Minimal caching at client side
+		- Consistency approach: Client polls the server to validate the cache
+		- Caches only 4KB chunks independently
+		- Efficient for Large files, having partial access to the files
+		- Can lead to mixed versions of the file
+		- Bad for consistency
+	- Four Fundamental Design Dimensions
+		- Performance
+			- Understand that Network latency is 3x slower than Disk reads
+		- Consistency
+			- Make sure that multiple clients must have same coherent data
+		- Naming
+			- Make sure that we have a global scheme of locating the files
+		- Security
+			- Maintain basic data integrity, authentication, and authorization
+	- How one decision of a dimension impacts others
+		- More performance optimizations -> Less consistency
+		- Better Naming schema -> Security boundary issues
+		- Better security mechanisms -> Less performance
+	- Why simple approach of DFS wont work
+		- Idea: All the clients forward all the operations to the server using RPC approach
+		- Benefit: No coherence issues at all
+		- Downsides: The network latency + crowding of clients creates huge bottleneck
+		- How to improve: Implement Caching
+	- Caching (Client-side)
+		- Store the copies of the frequently accessed data
+		- Trying to transform the network operations to local operations
+		- First access is slow, but the subsequent accesses are much faster
+		- Reduces congestion at server level
+		- Questions to ask
+			- Update visibility - when should new writes changes are visible to others
+			- Cache invalidation - when does the client understand that its cache is stale
+	- Consistency spectrum
+		- Each of the applications can have different types of consistency such as Strong consistency or weaker consistency
+		- Strong consistency - Less performance - Such as Simple server solution + RPC
+		- Weaker consistency - More performance - No guarantees at all
+		- So, we have to design the application with the weakest consistency model that it can tolerate
+	- Consistency Models
+		- Broadcasting Invalidations
+			- When file is modified, the server broadcasts the invalidates the caches for each client. When client receives this message, discards its cache, and when that particular client performs the operation, it gets the entire data and caches again
+			- Advantages - Simple to implement
+			- Disadvantages - Explosion of messages, leading to unscalability
+		- Check on Use
+			- When client is about to do any operation, it checks with the server if the stored cache is valid
+			- Advantages - Simple to implement, reduces the RPC bandwidth
+			- Disadvantages 
+				- Every read triggers the same round trip
+				- Server is bombarded with the validation requests
+		- Time based Check on Use (NFS v2)
+			- Client when caches the data for the first time, stores the timestamp, and when the client reads the data again within the 60sec limit, it doesnt validate with server, else restart the process
+			- Advantages - Server load is reduced
+			- Disadvantages - Strict consistency is lost, expecting clients can tolerate a minute long inconsistency window
+		- Callbacks (AFS)
+			- When client caches a file, the server stores its entry in a list. Server callbacks the client when the file is changed. Client trusts the client until callbacks are received
+			- Advantages - Good performance gain
+			- Disadvantages
+				- Server must gracefully recover from failures
+		- Leases
+			- 
