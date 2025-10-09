@@ -200,7 +200,112 @@ Midsem 1
 		- Advantages - Deadlock free, Starvation free
 	- Token ring
 		- Ideal when we want to minimize the msg overhead as we simply use the token only to pass the control
-		- Can be harmful, as the token is passed unnecessarily to everyone irrespective whether they want it or not
+		- Can be harmful, as the token is passed unncessarily to everyone irrespective whether they want it ot
 		- Correctness - will be unfair in large systems due to delay
 		- Performance - Number of messages are 1 to infinity per cycle
 		- Issues - Token is lost
+
+
+- Remote Procedure Call (RPC)
+	- RPCs allow nodes to call functions that execute on other nodes using convenient syntax
+	- It's a programming model for distributed computation, making it more transparent especially "Access level transparency"
+		- To the client, it's going to look just like calling a function
+		- To the server, it's going to look just like implementing a function that gets called
+	- Low transparency - More complexity; looks like distributed systems; Less abstractions (EC2)
+	- High transparency - Less complexity; looks like monolith; More abstractions (Google photos)
+	- The key difference from a local function call is what happens when things fail
+	- Complete transparency is not possible
+	- Distributed and local function call performance different
+	- RPC falls under "Middleware services"
+	- RPC in Go
+		- Provides access to the exported methods of an object across a network or other I/O connection.
+		- A server registers an object (like rpc.register), making it visible as a service with the name of the type of the object by exporting
+		- After registration, exported methods of the object will be accessible remotely.
+		- Multiple objects(services) of same type is not possible
+	- Stubs - Code that handles de/serializing RPC arguments
+	- Stubs generally use IDL - interface definition language - protobufs
+	- If the arguments in the service changes, we have to make change both server and client (but if we use some rpc framework, we can have single point of change due to IDL)
+	- RPC workflow
+	    1. client procedure calls the client stub in the normal way
+		2. client stub builds a message and calls the local OS
+		3. client OS sends the message to the remote OS
+		4. the remote OS gives the message to the server stub
+		5. server stub unpacks the parameters and calls the server
+		6. server does the work and returns the result to the stub
+		7. server stub packs the result in a message and calls its local OS
+		8. server’s OS sends the message to the client’s OS
+		9. client’s OS gives the message to the client stub
+		10. client stub unpacks the result and returns it to the client
+	- Challenges in RPC, when implemented in distributed systems
+		- Memory Access - Cant use pointers, need to use Pass by Value
+		- Failures of systems - RPC must handle these failures as if LPC
+			- Communication failures - happens due to unreliable network
+			- Machine failures - server or client fails
+			- We need to make the partial failures transparent to client
+				- We can treat these partial failures treated as complete failures and reboot from scratch
+				- But this idea is not practical
+			- So, instead of treating as LPC, we can tolerate failures using semantics i.e., we tell the client about the failure (applying them on client's application layer)
+	- Semantics of RPC
+		- At least once - For idempotent operations - Just keep retrying on client side until you get a response.
+			- If the client receives a response message to a request:
+			    - then the request was exectued at least one time (perhaps more than once)
+			- If the client does not receive a response message:
+			    - then the request _might_ have been executed (or it might not, or it might have been exectued more than once)
+		- At most once - Server might get same request twice, Must re-send previous reply and not process request
+			- If the client receives a response message to a request:
+			    - then the request was exectued exactly once
+			- If the client does not receive a response message:
+			    - then the request _might_ have been executed (or it might not)
+		- Exactly once - Impossible in practice - A message is guaranteed to be sent and received exactly-once.
+			- If the client receives a response message to a request:
+			    - then the request was exectued exactly once
+			- If the client does not receive a response message:
+			    - it blocks forever retransmitting the request and waiting until it receives a response
+
+
+
+- Two phase commit
+	- Assumptions
+		- Ignoring failures, as concurrency is main concern
+		- How we deal with failures - We use some checkpointing so that there is recovery
+	- Challenges with composite operations
+		- Lack of atomicity
+		- Fault tolerance
+	- Solved using transactions, and they fully execute or abort
+	- ACID
+		- Atomicity: Each transaction completes in its entirely, or is aborted. If aborted, should not have effect on the shared global state.
+		- Consistency: Each transaction preserves a set of invariants about global state. (Nature of invariants is system dependent). Example: in a bank system, law of conservation of money 
+		- Isolation: serializability -> each transaction executes as if it were the only one with the ability to read/write shared global state - So, cant have any kind of interleaving operations
+		- Durability: Once a transaction has been completed, or “committed”, its effects will persist, even in the presence of failures.
+	- One way to implement perfect txn on a single machine is using "Global ordering of locks", which guarantees strong Isolation. 
+	- Best practice of this global ordering of locks is "two phase locking"
+		- Phase 1: Acquire locks, no locks are released
+		- Phase 2: Release locks, no locks are acquired
+	- Deadlocks can occur at 2PL, but can be prevented using wait-for-graphs + timeouts
+	- 2PC
+		- In case of distributed systems, 2PC is a better way to follow Atomicity and Consistency, where all the servers reach the same decision at the end.
+		- Only single decision is reached by all nodes at the end
+		- Assumptions - Reliable, in order communication; Asynchronous network; Fail-recover with stable storage
+		- Phase 1A: Coordinator sends "PREPARE" to participants
+		- Phase 1B: Participants log vote to disk and responds with vote "VoteCommit" or "VoteAbort" - must persist to disk before sending message; 
+		- Phase 2A: Coordinator checks votes. If all VoteCommit: write to disk and send DoCommit; else write to disk and send DoAbort - Commit point: after the coordinator has written Commit to stable storage
+		- Phase 2B: Participants receive the final decision, write Commit/Abort to disk, and send Ack back to coordinator, coordinator logs END and ends the transaction
+	- 2PC correctness - Atomicity is ensured
+	- Liveness is maintained in 2PC using timeouts i.e., not blocking everyone
+	- Failure scenarios
+		- Participant fails with no logged decision
+			- During execution: Coordinator sees timeout at participant, aborts and informs everyone
+			- Upon recovery: participant does not see any logged decision, aborts transaction
+		- Participant fails with logged VoteAbort
+			- During execution: Coordinator sees VoteAbort, aborts (or) Coordinator sees timeout at participant, aborts and informs everyone
+			- Upon recovery: participant unilaterally aborts after seeing local “VoteAbort”
+		- Participant fails with logged VoteCommit
+			- During execution: Coordinator sees VoteCommit, checks other decision
+			- Upon recovery: participant asks the coordinator
+		- Coordinator fails with logged COMMIT and END
+			- Participants have already logged the final decision and sent Ack
+		- Coordinator fails before sending out decision, all participants have logged VoteCommit
+			- Participants cannot proceed until coordinator comes back up
+			- Coordinator sends decision to participants once up
+	- 2PC is BLOCKING protocol, where Paxos is non-blocking protocol
+	-  2PC generally uses concept of 2PL, ensuring isolation as well with atomicity and consistency
