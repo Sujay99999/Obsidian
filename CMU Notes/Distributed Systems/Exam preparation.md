@@ -113,4 +113,69 @@ Midsem 1
 		- It sends the required adjustment to the workers (better than sending the time which depends on the RTT)
 		- Benefit - We can reelect masters if we lose one; Outliers are discarded
 	- NTP
-		- 
+		- There is need to sync clocks across internet; Its for broader networks, where as the Cristian and Berkeley are LAN devices
+		- Uses hierarchy of servers, where primary servers are connected to UTC, secondary servers are connected to primary, our devices are connected to secondary
+		- Syncing between times of these servers is similar to Cristian algo
+		- All msgs uses UDP
+	- Lamport Clocks
+		- We need to only capture the “happens before” relationship between events
+		- Almost can be understood as causality - a has caused b
+		- The expression a → b is read “event a happens before event b” and means that all processes agree that first event a occurs, then afterward, event b occurs.
+		- The “happened before” relation is transitive -  if a->b and b->c, then a->c
+		- So, if we have two events are NOT causal, then they are concurrent i.e., a || e
+		- Each process pi has a logical clock, L(i) starts with 0, which can be used to apply logical timestamps to events [Check to remove this]
+			- Rule 1: L(i) is incremented by 1 before each event at process p(i)
+			- Rule 2:
+				- when process p(i) sends message m, it piggybacks(adding 1) t = L(i)
+				- when p(j) receives (m,t) it sets L(j) := max(L(j), t) and applies Rule 1 before time stamping the event receive (m)
+		- If e -> f, then L(e) < L(f); If L(e) < L(f), then its NOT e < f, can be e || f 
+		- Disadvantage - They dont capture causality completely
+	- Total Order lamport clocks
+		- Many systems require a total-ordering of events, not a partial-ordering
+		- Use Lamport’s algorithm, but break ties using the process ID
+		- Only used to BREAK ties between concurrent events, not capture casuality
+	- Vector clocks
+		- Covers overcomings of lamport clocks of not capturing causality
+		- V(e) < V(f), then e -> f
+
+
+- Mutual exclusion algorithms
+	- There are two different types of scaling - up(vertical) or out(horizontal)
+	- In single systems, we have locks to make sure that we dont have inconsistency
+		- Mutex requirements
+			- Correctness/ Safety - At most only one process can use CS
+			- Fairness - No process will hold onto lock forever; Any process that makes a request must be granted lock
+	- Distributed mutex
+		- Requirements - low msg overhead; no bottlenecks; tolerate unreliable network; 
+		- Assumptions - Number of processes are fixed at n; NO process fails
+	- Centralized algorithm
+		- Coordinator gets a REQUEST from the clients, where he sends back OK. If another client asks, then there is no reply, but put onto queue
+		- When first client is done, sends RELEASE to C, then it sends OK to top most element of queue
+		- Correctness - Obviously safe; Fairness depends on the queueing policy
+		- Performance - We send 3 total msgs in one cycle (REQUEST, OK, RELEASE)
+		- Issues - Bottleneck due to C; C can be single point of failure i.e., client cant say whether C is dead or its queued
+	- Bully Leader Algorithm
+		- Stage 1: Process P notices that leader has failed
+		- Stage 2: Election Algorithm, e.g., Bully Algorithm
+			- P sends an ELECTION message to all processes with higher numbers and expects some replies OK from higher processes
+			- If no one responds, P wins the election and becomes coordinator by broadcasting the COORDINATOR msg.
+			- If one of the higher-ups answers, it takes over. P’s job is done.
+		- Correctness - Not completely fair
+	- Ring Algorithm
+		- Clients who detected that C is failed, sends the election msg - process IDs in a array to the next node
+		- Eventually they receive back the same array back, and check the highest ID guy
+	- Decentralized algorithm
+		- Opposite extreme to centralized algorithm
+		- Assume that there are n coordinators
+			- Get a majority vote from m (messages) > n/2 coordinators
+			- Reply immediately with GRANT or DENY
+		- If it doesnt get majority - retry later
+		- Correctness - Majority ensures safety; Fairness depends on random chance
+		- Performance - 2m + m [TODO] msgs per attempt to get majority; Unbounded number of msgs per cycle
+		- Issues - Potential Starvation; Backoff and retry problem; Forgets vote on reboot
+	- Totally ordered multicast
+		- This says that if we had a total order, we could rely on it to grant access to a shared resource
+		- The ordering in the priority queue based on the timestamp makes sure that the msgs are in order
+		- NOTE: Acks are also multicasted to all other processes
+	- Lamport Mutual exclusion
+		- In this, we send the Ack only to the requestor
