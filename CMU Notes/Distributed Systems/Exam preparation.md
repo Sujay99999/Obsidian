@@ -12,13 +12,13 @@ Midsem 1
 	- AFS
 		- Design goal: Scale to support tens os thousands of users
 		- Strategy: Aggressive caching, whole file operations
-		- Consistency approach: Server basically sends callbacks to notify the clients of the changes
+		- Consistency approach: Server basically sends callbacks to notify the clients of the changes (Server is Stateful)
 		- Caches the entire files as units
 		- Wasteful for small edits to large files + Losing local changes when caches are overwritten
 		- Better for consistency
 	- NFS
 		- Design goal: Simple, ROBUST file system
-		- Strategy: Stateless server + Minimal caching at client side
+		- Strategy: Stateless server + Minimal caching at client side (Server is Stateless)
 		- Consistency approach: Client polls the server to validate the cache
 		- Caches only 4KB chunks independently
 		- Efficient for Large files, having partial access to the files
@@ -55,7 +55,7 @@ Midsem 1
 		- Strong consistency - Less performance - Such as Simple server solution + RPC
 		- Weaker consistency - More performance - No guarantees at all
 		- So, we have to design the application with the weakest consistency model that it can tolerate
-	- Consistency Models
+	- Caching strategies
 		- Broadcasting Invalidations
 			- When file is modified, the server broadcasts the invalidates the caches for each client. When client receives this message, discards its cache, and when that particular client performs the operation, it gets the entire data and caches again
 			- Advantages - Simple to implement
@@ -76,4 +76,41 @@ Midsem 1
 			- Disadvantages
 				- Server must gracefully recover from failures
 		- Leases
-			- 
+			- A lease grants a client the right to cache the data for particular time period. The server promises not to allow modifications without notification during the lease period
+			- Read lease
+				- Multiple clients can hold this lease
+				- Guarantees that no writes will be done in this period such as 30sec
+			- Write lease
+				- Only one client can get this
+				- Any modification, is instantly updated at the server
+				- Must write through before the lease expires
+			- Advantages - the max inconsistency == lease duration + better server recovery
+			- Implementation requirements
+				- Need clock sync between all of them
+				- Grace periods for latency issues
+	- Consistency Semantics
+
+
+- Time Sync
+	- Keeping the track of the time is hard
+	- Different Time standards
+		- UT1 - Universal time - Based on the astronomical observations - greenwich mean time
+		- TAI - Temps atomique international - based on cycles of radiation from Cesium- Diverged from UT1 due to slowing of earth
+		- UTC - TAI + leap seconds to be within 0.9s of UT1 - Currently 30 leap secs
+	- In a perfect network, we expect that there is propagation delay of d secs, then the synchronization error is at most d/2 (sender is at t time, then receiver is at t+d/2)
+	- But you always have unreliable network
+	- Cristian Time Sync
+		- We basically have a time source S, which has access to the UTC clock, and different processes/ nodes talk to this S to set their time
+		- Process p requests time in m(r) and receives time value t in m(t) from S
+		- p sets its clock to t + RTT/2
+		- Accuracy ± (RTT/2 - min) [TODO if we need more details]
+		- Problems - S might fail; Only reasonable to use if RTTs are short; Probabilistic nature
+	- Berkeley Algorithm
+		- An algorithm for internal synchronization of a group of computers
+		- A master node/ time deamon polls to collect clock values from the others (workers)
+		- The master node uses RTT to estimate the workers’ clock values
+		- It takes an average (eliminating any outliers)
+		- It sends the required adjustment to the workers (better than sending the time which depends on the RTT)
+		- Benefit - We can reelect masters if we lose one; Outliers are discarded
+	- NTP
+		- 
