@@ -111,7 +111,7 @@ Midsem 1
 		- The master node uses RTT to estimate the workers’ clock values
 		- It takes an average (eliminating any outliers)
 		- It sends the required adjustment to the workers (better than sending the time which depends on the RTT)
-		- Benefit - We can reelect masters if we lose one; Outliers are discarded
+		- Benefit - We can reelect masters if we lose one; Outliers are discarded; Eventual correctness in time
 	- NTP
 		- There is need to sync clocks across internet; Its for broader networks, where as the Cristian and Berkeley are LAN devices
 		- Uses hierarchy of servers, where primary servers are connected to UTC, secondary servers are connected to primary, our devices are connected to secondary
@@ -170,6 +170,7 @@ Midsem 1
 			- Get a majority vote from m (messages) > n/2 coordinators
 			- Reply immediately with GRANT or DENY
 		- If it doesnt get majority - retry later
+		- Used when you the case multiple servers join/ drop frequently 
 		- Correctness - Majority ensures safety; Fairness depends on random chance
 		- Performance - 2m + m [TODO] msgs per attempt to get majority; Unbounded number of msgs per cycle
 		- Issues - Potential Starvation; Backoff and retry problem; Forgets vote on reboot
@@ -178,4 +179,28 @@ Midsem 1
 		- The ordering in the priority queue based on the timestamp makes sure that the msgs are in order
 		- NOTE: Acks are also multicasted to all other processes
 	- Lamport Mutual exclusion
-		- In this, we send the Ack only to the requestor
+		- In this, we send the Ack only to the requestor, and once a process recieves all the acks, then it can access the CS
+		- When node i wants to enter C.S., it sends time-stamped request to all other nodes (including itself)
+			- Wait for replies from all other nodes.
+			- If own request is at the head of its queue and all replies have been received, enter C.S.
+			- Upon exiting C.S., remove its request from the queue and send a release message to every process.
+		- Correctness - Yes, it has the fairness
+		- Performance - 3*(n-1) i.e., process i sends n-1 req, n-1 reply, n-1 release msgs
+		- Issues - only performance issues
+	- Ricart Agarwala Exclusion
+		- It uses better optimization than Lamport mutex algo
+		- Same concept as Lamport, but
+		- On the receiving processes end, 3 possible cases:
+			1. Receiver uninterested in resource = If the receiver is not accessing the resource and does not want to access it, it sends back an OK message to the sender.
+			2. Receiver already has access to resource. If the receiver already has access to the resource, it simply does not reply. Instead, it queues the request.
+			3. Receiver wants access to resource, but doesn’t have it yet. If the receiver
+				wants to access the resource as well but has not yet done so, it compares the timestamp of the incoming message with the one contained in the message that it has sent everyone. The lowest one wins. If the incoming message has a lower timestamp, the receiver sends back an OK message. If its own message has a lower timestamp, the receiver queues the incoming request and sends nothing.
+		- Correctness - Yes
+		- Performance - Each cycle has 2*(n-1) msgs
+		- Advantages - Deadlock free, Starvation free
+	- Token ring
+		- Ideal when we want to minimize the msg overhead as we simply use the token only to pass the control
+		- Can be harmful, as the token is passed unnecessarily to everyone irrespective whether they want it or not
+		- Correctness - will be unfair in large systems due to delay
+		- Performance - Number of messages are 1 to infinity per cycle
+		- Issues - Token is lost
