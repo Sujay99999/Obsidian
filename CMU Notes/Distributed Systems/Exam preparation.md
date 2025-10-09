@@ -91,10 +91,10 @@ Midsem 1
 	- Consistency Semantics
 		- NFS - Close to open + attribute caching
 			- Writes visible to other clients on close(); Reads may use stale cached data for up to 60 seconds; Metadata changes propagate within attribute timeout
-			- Trade-off: Acceptable for human-driven workloads
+			- Trade-off: Acceptable for human-driven workloads, but can internally create frankenstein files leading to breaking of applications
 		- AFS
 			- Changes visible only after close(); Entire file is the unit of update; Last-closer wins for concurrent sessions
-			- Trade-off: Works for personal files, fails for shared databases
+			- Trade-off: Works for personal files, fails for shared databases, but no file mixing
 	- Session Semantics
 		- AFS - Files are unit of consistency
 			-  SAME client: All processes see writes immediately; Just like local file system
@@ -106,6 +106,12 @@ Midsem 1
 				2. On close(): Entire file sent to server
 				3. Server breaks callbacks to other clients
 				4. Other clients invalidate cache for NEW opens only
+	- Naming
+		- Location Transparency vs. Independence:
+			- Transparency: Users don't see physical location; Example: /home/alice/file.txt
+			- Independence: Files can move without changing names; Requires indirection layer
+		- Local integration - NFS approach - Each client build its own view; Simple but inconsistent; Different clients see different namespaces
+		- Global namespace - AFS approach - Complex but consistent
 
 
 - Time Sync
