@@ -398,3 +398,80 @@ Midsem 1
 	- Critical Section: piece of code accessing a shared resource, usually variables or data structures
 	- Race Condition: Multiple threads of execution enter CS at the same time, update shared resource, leading to undesirable outcome
 	- Indeterminate Program: One or more Race Conditions, output of program depending on ordering, non deterministic
+	- Mutual Exclusion
+		- guarantee that only a single thread/process enters a critical section, avoiding races.
+		- Desired properties of mutex
+			- (Correctness): single process in CS at one time
+			- Progress (Efficiency): Processes don’t wait for available resources, or no spin-locks => no wasted resources
+			- Bounded Waiting (Fairness): No process waits for ever for a resource, i.e. a notion of fairness
+	- Semaphores
+		- A semaphore is an integer variable with two atomic operations
+		- **P(x)** (proberen = "to test"): `while (x == 0) wait; x--`
+		- **V(x)** (verhogen = "to increment"): `x++`
+	- Condition variables provide efficient waiting (better than spin-locks):
+		- **Wait()**: Atomically releases mutex & suspends. When resumed, re-acquires mutex
+		- **Signal()**: Wakes up at least one waiting thread (NO-OP if none waiting)
+		- **Broadcast()**: Wakes up ALL waiting threads
+
+
+
+![[Screenshot 2025-10-09 at 8.36.53 AM.png]]
+
+
+
+
+- Networking
+	- **Circuit Switching vs Packet Switching**
+
+| Feature             | Circuit Switching                     | Packet Switching                            |
+| ------------------- | ------------------------------------- | ------------------------------------------- |
+| Resource Allocation | Dedicated circuit for each connection | Shared links via _statistical multiplexing_ |
+| Reliability         | High, predictable                     | Variable delay, congestion possible         |
+| Scalability         | Poor (per-flow state)                 | Excellent                                   |
+| Example             | Telephone system                      | Internet (TCP/IP)                           |
+
+- **Packet switching advantages**: bursty traffic efficiency, robustness, dynamic routing.
+- **Circuit switching advantages**: consistent QoS, low jitter (good for voice)
+- **Statistical Multiplexing**
+	- Many flows share the same link over time.
+	- Uses **FIFO queues**; bursty traffic smoothed out across flows.
+	- Queueing → delay, potential congestion (key for TCP).
+- Multiplexing/Demultiplexing
+	- Each layer can support multiple protocols (e.g., IP → TCP/UDP).
+	- Headers include **demux fields** (e.g., protocol number in IP).
+- End-to-End Argument
+	- **Principle**: Implement functionality at endpoints unless it can’t be efficiently done there.
+	- Example: Reliability
+	    - Network-level retransmission = wasteful if app must verify data anyway.
+	    - End-host-level reliability (TCP) preferred.   
+	- **Exceptions**: Hop-by-hop reliability may help for _high-loss links_ (e.g., satellite).
+- Addressing Schemes
+
+|Type|Description|Pros|Cons|
+|---|---|---|---|
+|Flat|e.g., MAC address (48-bit, unique per NIC)|Plug & play|Not scalable (huge tables)|
+|Hierarchical|e.g., IP address (prefix + host)|Scalable, aggregatable|Complex management|
+- IPv4 Basics
+- 32-bit address = Network prefix + Host ID
+- Dotted decimal: e.g., `12.34.158.69`
+- Assigned dynamically (DHCP
+
+Classful Addressing (Historic)
+
+| Class | Leading Bits | Network Bits | Host Bits | Range                     | Notes                   |     |
+| ----- | ------------ | ------------ | --------- | ------------------------- | ----------------------- | --- |
+| A     | 0            | 8            | 24        | 1.0.0.0 – 126.0.0.0       | For very large networks |     |
+| B     | 10           | 16           | 16        | 128.0.0.0 – 191.255.0.0   | Medium                  |     |
+| C     | 110          | 24           | 8         | 192.0.0.0 – 223.255.255.0 | Small                   |     |
+- Routers combine entries going to same network.
+- Reduces forwarding table size:
+- TCP Performance Example
+
+|Variable|Symbol|Example|
+|---|---|---|
+|Packet size|P|1500 bytes|
+|RTT|T|100 ms|
+|Window|W|3 packets|
+|Throughput|(W × P × 8) / T|360 Kbps|
+
+
