@@ -309,3 +309,92 @@ Midsem 1
 			- Coordinator sends decision to participants once up
 	- 2PC is BLOCKING protocol, where Paxos is non-blocking protocol
 	-  2PC generally uses concept of 2PL, ensuring isolation as well with atomicity and consistency
+
+- Fault tolerance
+	- Backward recovery
+		- Return the incorrect state to some previous correct state (via a checkpoint), then continue executing.; Retransmission; Easier to implement; Expensive
+	- Forward recovery
+		- bring the system into a correct new state, from which it can then continue to execute.; Erasure coding (reconstruct from received packets); Harder to implement; Recovery could be faster
+	- Checkpointing (Backward recovery)
+		- Assumption: Stable, persistant storage
+		- Consistent snapshot: For any recorded event e somewhere in the snapshot, any events that happened before e should also be recorded in the snapshot
+		- Independent checkpointing records only local state; Easier to implement; Difficult to recover consistently; Prone to cascaded rollbacks
+		- Coordinated checkpointing 
+			- Assumptions: Global state changes when event happens; Channels are FIFO
+	- Chandy Lamport Algorithm
+		- Does not require “stopping” the application when recording snapshot
+		- Multiple processes can initiate snapshots at the same time
+		- Step 1: Snapshot initiation by Process P
+			- P records its own state
+			- P sends marker to all other processes on OUTGOING channels
+			- P starts recording on its INCOMING channels i.e., < recording >
+		- Step 2: Snapshot propagation, when process P(i) receives marker message
+			- If receiving the marker for the first time (Sending a marker message is counted as receiving)
+				- Records its own state
+				- Mark that INCOMING channel as empty
+				- Propagate marker to all other processes on OUTGOING channels
+				- Start recording incoming messages on other channels
+			- Else
+				- Stop recording on that incoming channel
+		- Step 3: Snapshot termination
+			- All processes have received a marker in their incoming channels
+	- Tradeoffs of using frequent checkpoints
+		- Pros: Less rollbacks
+		- Cons: Overhead during normal operation (Significant I/O traffic)
+	- Logging
+		- Complements checkpointing
+		- WAL - Write ahead logging - Log operations to storage before operating
+		- Recovery: Go through the logs and replay them
+	- If frequent checkpointing is slow, then have fine grained logs
+	- If logs are growing unbounded, then use periodic checkpointing
+	- Checkpointing used to record coarse-grained system snapshots
+	- Logging used to record fine-grained system operations
+	- Recovery: rollback to most recent snapshot, then continue recovering using log records
+	- Consistency types
+		- Strict: System has a global clock; Writes instantly to every replica; Read always returns from latest write
+		- Sequential: Weaker than strict; Lead to global order
+		- Causal: All nodes see potentially causally related writes in the same order, but writes on different replicas might be concurrent
+	- SMR
+		- replicas should be in sync with each other
+		- Any operation should be propagated to all replicas
+		- Replicas reach consensus through consistent log ordering
+	- Consensus is impossible due to 2 assumptions: Deterministic algo; We need to fully achieve consensus (Safety+Liveness) but possible by compromising
+	- Paxos
+		- Correctness(safety): yes, we get that as we get a single value to be chosen, and also guarantee that the value is proposed by some node
+		- Liveness - Not guaranteed, sacrificed in favor of correctness
+		- Fault tolerance - if < f servers are failed, still we can reach consensus
+		- 2f+1 nodes, f+1 quorum size
+		- At least one acceptor common to distinct quorums
+		- An acceptor accepts only a single proposal
+		- All proposals are globally ordered using a unique numbering
+		- Once chosen, the Proposers must block unknown future proposals through a “lock”
+	- Paxos workflow
+		- Proposers
+			1) 1 Choose new proposal number n
+			2) 2 Broadcast Prepare(n) to all servers
+			3) 4 When responses received from majority:
+				1) If any acceptedValues returned, replace value with acceptedValue for highest acceptedProposal
+			 4) 5. Broadcast Accept(n,value) to all servers
+			 5) 7. When responses received from majority:
+				 1) If majority Accept-OK(), value is definitely chosen
+				 2) Could retry if no majority accept
+		 - Acceptors
+			 - 3. Respond to Prepare(n):
+				 - If n > minProposal then minProposal = n
+					 - Prepare-OK(acceptedProposal, acceptedValue)
+				 - else Prepare-REJECT()
+			 - 6. Respond to Accept(n,value):
+				 - If n ≥ minProposal then acceptedProposal = minProposal = n and acceptedValue = value
+					 - Accept-OK()
+				 - else Accept-REJECT()![[Screenshot 2025-10-09 at 7.26.41 AM.png]]
+	 - Dueling can occur leading to blocking
+	 - Adversary can spam request with higher numbers
+
+
+- Go style concurrency
+	- Reasons that 2 processes interact with each other in first place
+		- Processes may need to cooperate to carry out some task - leading to Condition Synchronization
+		- Processes may compete for exclusive use of services or resources - leading to Mutual exclusion
+	- Critical Section: piece of code accessing a shared resource, usually variables or data structures
+	- Race Condition: Multiple threads of execution enter CS at the same time, update shared resource, leading to undesirable outcome
+	- Indeterminate Program: One or more Race Conditions, output of program depending on ordering, non deterministic
