@@ -74,7 +74,7 @@ Midsem 1
 			- When client caches a file, the server stores its entry in a list. Server callbacks the client when the file is changed. Client trusts the client until callbacks are received
 			- Advantages - Good performance gain
 			- Disadvantages
-				- Server must gracefully recover from failures
+				- Server must gracefully recover from failures, but better than NFS
 		- Leases
 			- A lease grants a client the right to cache the data for particular time period. The server promises not to allow modifications without notification during the lease period
 			- Read lease
@@ -89,6 +89,23 @@ Midsem 1
 				- Need clock sync between all of them
 				- Grace periods for latency issues
 	- Consistency Semantics
+		- NFS - Close to open + attribute caching
+			- Writes visible to other clients on close(); Reads may use stale cached data for up to 60 seconds; Metadata changes propagate within attribute timeout
+			- Trade-off: Acceptable for human-driven workloads
+		- AFS
+			- Changes visible only after close(); Entire file is the unit of update; Last-closer wins for concurrent sessions
+			- Trade-off: Works for personal files, fails for shared databases
+	- Session Semantics
+		- AFS - Files are unit of consistency
+			-  SAME client: All processes see writes immediately; Just like local file system
+			- OTHER clients: See changes only after close(); Not during the editing session
+			- NEW opens: Get latest version from server
+			- EXISTING opens: Keep their cached copy - IMP as it overrides based on lastwriter
+			- Implementation:
+				1. Client buffers dirty data locally during session
+				2. On close(): Entire file sent to server
+				3. Server breaks callbacks to other clients
+				4. Other clients invalidate cache for NEW opens only
 
 
 - Time Sync
