@@ -1,4 +1,4 @@
-- Challenges of Internet
+ - Challenges of Internet
 	- Internet operates at an enormous scale
 	- Internet must handle diverse uses of applications
 	- Internet is Asynchronous, making us to deal with Stale data
