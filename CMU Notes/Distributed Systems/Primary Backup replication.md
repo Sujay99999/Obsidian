@@ -1,0 +1,6 @@
+- Doubts
+	- What are exactly fail stop failures
+	- What is split brain issue
+	- Difference in approaching the fault tolerance by state transfer vs replicated state machine
+	- Determinstic and non-deterministic events
+	- difference in hradware replication vs machine level replication
