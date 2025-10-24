@@ -4,3 +4,5 @@
 	- Difference in approaching the fault tolerance by state transfer vs replicated state machine
 	- Determinstic and non-deterministic events
 	- difference in hradware replication vs machine level replication
+	- applicatio based interrupts vs linux based interrupts
+	- Are we sure that the non deterministic events are only sent via the logging channel
