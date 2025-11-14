@@ -4,10 +4,50 @@
 - https://raft.github.io/
 - https://arorashu.github.io/posts/raft.html
 
+## Definition of Correctness in Consensus Algorithms wrt Raft
+
+#### Safety: 
+Guaranteeing that only one value or decision is agreed upon. Conflicting decisions are prevented to maintain data consistency.
+
+#### Liveness:
+Ensures that the system can make progress and continue to agree on new values or decisions even in the absence of failures.
+
+### How Raft guarantees Safety
+- #### Election Safety
+	- Property: At most one leader can be elected in a given term
+	- How it Works:
+		- Every Peer in the network, is allowed to vote only once in a given term
+		- Any Candidate must obtain majority of the votes to become a leader, ensuring that no other peer can become a leader in that particular term 
+- #### Leader Append Only
+	- Property: Leader never overwrites or deletes entries in its log; it only appends new entries
+	- How it Works:
+		- A leader can never assume that any log from previous terms is already committed
+		- When a leader undergoes network partition, but joins back it indirectly continues the process of committing the previous entries along with the current ones
+- #### Log Matching
+	- Property: If two logs contain an entry with the same index and term, then the logs are identical in all entries up through the given index
+	- How It Works:
+		- This is guaranteed by the fact that, any AppendEntry RPC performs a recursive check of finding the last common log while appending new entries from the leader, and as the recursion is completed, the leader and the follower have same logs
+		- The above property can be broken down into another property as "If two entries from different peers, have the same log index and the term, then they store the same command", which is guaranteed by the simple fact that, the log entries is a array based structure, where we can't have multiple logs at the same index.
+- #### Leader Completeness
+	- Property: If a log entry is committed in a given term, then that entry will be present in the logs of the leaders for all higher numbered terms
+	- How it Works:
+		- This property is satisfied using multiple properties.
+			- Leader Append Only - A leader never deletes/ overwrites it the entries in its log 
+			- A leader only commits the entries from the current term, which indirectly commits the log entries from previous terms as well - Section 5.4.2
+			- A entry when present on the majority on the peers is said to be committed only when the leader acknowledges it - Section 5.4.2 and 5.4.1
+- #### State Machine Safety
+	- Property: If a server has applied a log entry at a given index to its state machine, so no other server will ever apply a different log entry for the same index.
+	- How it Works:
+		- This property is satisfied using multiple properties.
+			- Leader completeness - If a log entry is committed in a given term, then that entry will be present in the logs of the leaders for all higher numbered terms
+			- Log Matching Property - If two logs contain an entry with the same index and term, then the logs are identical in all entries up through the given index
+
+### How Raft guarantees Liveness
+- 
 
 ## Nuances in understanding the Algorithm
 
-#### Definitions of Correctness
+
 
 
 #### Why does leader commit the logs only from the current term not previous terms
