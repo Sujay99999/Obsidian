@@ -1,13 +1,24 @@
 Class notes
-What Fault tolerance in the Hard drives mean
-- Metrics for the availability
-	- MTTF 
-		- Mean time for failures
-		- It is the average of the TTFs
-	- MTTR
-		- Mean time for repairs
-		- Its average of the of the TTRs
-	- MTBF
-		- Mean time between failures
-		- MTBF = MTTR + MMTF
-	- Availability = MTTF/ (MT)
+- What Fault tolerance in the Hard drives mean
+	- Metrics for the availability
+		- MTTF 
+			- Mean time for failures
+			- It is the average of the TTFs
+		- MTTR
+			- Mean time for repairs
+			- Its average of the of the TTRs
+		- MTBF
+			- Mean time between failures
+			- MTBF = MTTR + MMTF
+		- Availability = MTTF/ MTBF 
+- Correleated failures - when multiple machines are effected due to the fact they are connected to same power supply/ or Top-of-Rack switch connected
+- Detecting and Correcting errors via Information redundancy
+	- We will be adding additional bits to the data to be protected, to verify the correctness of the data as well as the Bring the data into the correct state
+	- This can be done using the ECC codes
+		- Original data to be sent - d
+		- EEC code for the original data - f(d)
+		- Data received on the other side - d'
+		- EEC code recieved on the other side - (f(d))'
+		- How safety is guarenteed
+			- if f(d') == (f(d))', then there is no error, else there is
+- Redudancy failures for the Hard disks
