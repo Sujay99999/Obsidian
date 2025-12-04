@@ -3,6 +3,7 @@
 - https://eli.thegreenplace.net/2020/implementing-raft-part-0-introduction/
 - https://raft.github.io/
 - https://arorashu.github.io/posts/raft.html
+- https://www.oreilly.com/library/view/patterns-of-distributed/9780138222246/part06.xhtml
 
 ## Definition of Correctness in Consensus Algorithms wrt Raft
 
