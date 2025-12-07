@@ -38,3 +38,5 @@
 - Basic Examples for the Map reduce procedure
 	- Understand the Inputs and Outputs for all the Phases, when the data is small, as well as large
 	- Get the example from the slides
+- Spark
+	- 
