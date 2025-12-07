@@ -34,9 +34,3 @@
 		- For Reduce tasks, it checks the progress of all the 3 phases i.e., shuffles (merges), sorts, and reduces and accounting for one-third of a task's progress score
 		- When Master detects a slow task, it runs a corresponding backup (speculative) task simultaneously. Hadoop allows one speculative task per original slow task, and the two compete. Whichever version completes first is committed, and the other is killed.
 
-### Notes for the Final Exam
-- Basic Examples for the Map reduce procedure
-	- Understand the Inputs and Outputs for all the Phases, when the data is small, as well as large
-	- Get the example from the slides
-- Spark
-	- 

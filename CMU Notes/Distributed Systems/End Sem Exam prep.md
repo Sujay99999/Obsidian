@@ -1,0 +1,45 @@
+
+- MapReduce
+	- Check Basic Examples for the Map reduce procedure
+	- Understand the Inputs and Outputs for all the Phases, when the data is small, as well as large
+	- Get the example from the slides
+	- Understand the tradeoffs for them
+	- Even though we achieve fault tolerance using the heartbeat mechanism, we have this issue of stragglers
+	- Mapreduce vs MPI 
+- Spark
+	- Drawbacks of Mapreduce leading to Spark
+		- One of the biggest drawbacks for the mapreduce is for the iterative computation of large datasets, where we use the disk storage to hold intermediate results, even though we had great flexibility, but it had huge overhead
+			- Understand Relative cost of using In memory vs Disk and Network
+		- Iterative operations on a graph is also not recommended
+			- There was an explosion of Models over here with different features, why cant we have them all
+	- How Spark solves them all
+		- How in-memory computation works
+			- Keep and the share the datasets in the main memory
+			- Why this was not thought in first place for mapreduce = because of volatility and inability to store the pre and post mutations of the data
+		- Inability to store the pre and post mutations of the data
+			- First of all we dont need to store intermediate data if we know we can derive them back from the source
+	- We solve it using RDD (resilient distributed datasets)
+		- RDD only has few operations - map, groupBy, filter, sample, flatMap
+		- So, if there is any issue with the data, we can traceback to the previous checkpoint that can be a cache or source, and reapply those computations exactly on that particular shard of data
+		- RDD are immutable, and deterministic
+		- RDD are compatible with HDFS as well, as they support streaming Appends
+	- How RDD solves Fault tolerance
+		- RDD has 2 properties
+			- Immutability - once constructed, cant be changed
+			- Allow only Functional transformations - map, filter, reduce which are deterministic and can run in parallel
+	- Spark Job Architecture and components
+		- Driver program - main program/ application
+		- Context - Sparkcontext - handle to the spark cluster
+		- Worker program - Program that runs on the cluster nodes
+		- Executor - program within the node which runs the program
+	- Types of operations on RDD
+		- Transformations
+			- Returns new RDDs as a result
+			- Lazy - wont compute until needed
+			- Enables to optimize the operations for Spark by "Reorder the computations when required"
+			- Enables spark to recover from stragglers and failures
+			- Map, filter, distinct, flatMap (returns a sequence)
+		- Actions 
+			- Compute a result based on RDD and store on HDFS
+			- Eager - Result is computed immediately 
+			- Reduce, Take(n) = return array with first n ele, collect = return all ele as array, TakeOrdered(n, asc) = return first n ele in asc order
