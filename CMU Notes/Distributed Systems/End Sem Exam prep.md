@@ -45,4 +45,7 @@
 			- Reduce, Take(n) = return array with first n ele, collect = return all ele as array, TakeOrdered(n, asc) = return first n ele in asc order
 		- Persist - RDD to memory
 	- Issues with Spark
-		- 
+
+
+- RAID
+	- 

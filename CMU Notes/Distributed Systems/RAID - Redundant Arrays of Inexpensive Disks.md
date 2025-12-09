@@ -11,14 +11,15 @@ Class notes
 			- Mean time between failures
 			- MTBF = MTTR + MMTF
 		- Availability = MTTF/ MTBF 
-- Correleated failures - when multiple machines are effected due to the fact they are connected to same power supply/ or Top-of-Rack switch connected
+- Correlated  failures - when multiple machines are effected due to the fact they are connected to same power supply/ or Top-of-Rack switch connected
 - Detecting and Correcting errors via Information redundancy
 	- We will be adding additional bits to the data to be protected, to verify the correctness of the data as well as the Bring the data into the correct state
 	- This can be done using the ECC codes
 		- Original data to be sent - d
 		- EEC code for the original data - f(d)
 		- Data received on the other side - d'
-		- EEC code recieved on the other side - (f(d))'
-		- How safety is guarenteed
+		- EEC code received on the other side - (f(d))'
+		- How safety is guaranteed
 			- if f(d') == (f(d))', then there is no error, else there is
-- Redudancy failures for the Hard disks
+- Redundancy failures for the Hard disks
+	- RAID design has multiple levels which has different capacities and fault tolerance levels
