@@ -47,5 +47,16 @@
 	- Issues with Spark
 
 
-- RAID
-	- 
+- Virtualization
+	- Reasons for virtualization
+		- Improving resource utilization
+		- Resource and Failure Isolation
+		- Security Isolation 
+		- Platform Independence
+	- Early 1960's issue
+		- Any kind of OS was hardware dependent, and the applications were OS dependent and any change in the underlying stack reflects rewrite of the above component which led to huge maintenance
+	- Virtualization is basically a way to give the illusion of compute resources through abstractions
+	- Hardware virtualization 
+		- VMs running on Hypervisor/ Virtual Machine Monitor
+		- Software Layer between OS and Hardware
+		- Hypervisor can multiplex among multiple VMs
