@@ -60,3 +60,8 @@
 		- VMs running on Hypervisor/ Virtual Machine Monitor
 		- Software Layer between OS and Hardware
 		- Hypervisor can multiplex among multiple VMs
+	- Application Virtualization
+
+
+- Kafka
+	- MapReduce and Spark is very similar to Batch Processing, which can be parallelized
