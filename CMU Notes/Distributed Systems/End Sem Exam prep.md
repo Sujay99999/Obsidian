@@ -65,3 +65,16 @@
 
 - Kafka
 	- MapReduce and Spark is very similar to Batch Processing, which can be parallelized
+	- In the world of microservices or any computation system, which involves multiple message transfers between the components, then 
+		- RPC wouldn't work, as RPC directly couples the sender and the receiver
+		- RPC is a form of Direct communication
+	- There are 2 modes of communication
+		- Direct communication - Sender and the receiver are in the same space and time, where the sender expects the receiver to be online and reply back
+		- Indirect communication - The above requirements are not held
+			- Time uncoupling
+				- Sender can send the message even if the receiver is not available
+				- Allows us to deal with network partitions and volatile environments
+			- Space uncoupling 
+				- Sender sends the message but doesn't know to whom its sending
+				- Allows us to deal with addition/ change of nodes
+	- Pub-Sub basically falls in the category of "Time uncoupled and Space uncoupled"
