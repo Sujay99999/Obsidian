@@ -366,4 +366,4 @@
 			- Every node has a chance to be chosen to extend chains
 			- Chance is proportional to compute power, disabling the Sybil attack
 			- The assumption is that Majority of compute power is held by honest nodes
-			- Node is chosen as leader if the crypto puzzle is chosen i.e. Find nonce that breaks it
+			- Node is chosen as leader if the crypto puzzle is chosen i.e. Find nonce that breaks 
