@@ -10,7 +10,7 @@ Midsem 1
 	- AFS is more about scaling as much as possible and NFS is more about the reliability
 	- We can different filesystems designed based on different workload philosophies
 	- AFS
-		- Design goal: Scale to support tens os thousands of users
+		- Design goal: Scale to support tens of thousands of users
 		- Strategy: Aggressive caching, whole file operations
 		- Consistency approach: Server basically sends callbacks to notify the clients of the changes (Server is Stateful)
 		- Caches the entire files as units

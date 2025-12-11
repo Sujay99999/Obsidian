@@ -184,8 +184,64 @@
 			- Domain names
 				- Can be registered from the authority managing a top level domain
 			- Subdomains
-				- Managed by Domain adminstrator
+				- Managed by Domain administrator
 		- DNS Zones 
 			- Contiguous section of the namespace
 			- Managed by the specific organization
-			- 
+			- Each zone has an associated set of name servers, which are responsible for keeping the domain name i.e., IP address mapping for that zone
+			- DNS root is at the top of all zones, which is managed by 13 root name servers
+			- Root servers don't store all the domain names, instead they delegate the authority to the next level name servers
+			- Authoritative name servers keeps the mapping from Domain names to IP address
+		- DNS Resource Record = < Class, Name, Value, Type, TTL >. Class is always IN (Internet)
+			- Type A: Name is Hostname and value is IP address
+			- Type NS: Name is Domain and Value is Name of Authoritative name server
+			- Type CNAME: Name is Alias name, and value is Canonical Name
+		- Each host basically connects to the Local DNS servers, which answers all the DNS queries about the Local zone, providing the IP addresses and for the Non-local domain names, it finds it and caches the response
+		- What Happens when Local DNS server wants to find Non-local Domain name
+			- Iterative DNS query
+				- DNS server queries every necessary name server for the final IP mapping
+			- Recursive DNS query
+				- DNS server completes the request on the requestor's behalf
+		- Servers high in the hierarchy use iterative queries, as they deal with large loads, and servers low in the hierarchy use recursive queries
+		- Caching is important in scaling the DNS
+			- Cached DNS records expire based on TTL
+			- Top level NS records have very high TTL; Intermediary NS records have High TTL; Low records have small TTL
+			- Long TTLs alleviate load on root, where as the Tiny TTLs help in fault tolerance and load balancing
+	- CDN
+		- Edge servers
+			- Servers that connects the users/ hosts to the servers
+		- Core servers
+			- Servers that have high capacity, massive bandwidth, helps route data from origin servers to the edge servers
+		- Where to Cache Content
+			- CDN works with the ISPs to install PoP (Points of Presence), which brings the content closer to the user
+			- User retrieves the data by first contacting the closest edge location/ PoP, and the cache miss will lead to core servers and then the origin server
+		- How to direct the clients towards the PoP
+			- Using DNS based Indirection
+				- Load balancing - Mapping multiple IP addresses to the same name to reduce load
+				- Performance optimization - Configure DNS server to serve different IP addresses based on the region
+				- Multiplexing - Same IP address can have multiple DNS names
+		- How to choose a CDN server within a CDN edge location i.e., How does the PoP cache huge amount of data
+			- Can use Load balancing i.e., PoP has a set of Local cache servers, where the requests are distributed amongst them
+			- If a local cache server, then it retrieves from the origin server and cache it
+			- Load balancing with Round Robin
+				- Can have high cache miss rate leading to low cache storage efficiency
+			- Load balancing using Static Partitioning based on Key
+				- Can create skew based on keys
+			- Load balancing using Hash Partitioning
+				- Creates even distribution, but Can make adding/ removing the servers very hard
+			- Load balancing using Consistent hashing - Best Solution
+
+
+- BFT
+	-  Byzantine Broadcast properties
+		- Termination: Every honest node eventually halts with some output
+		- Agreement: All the honest nodes will halt with the same output 
+		- Validity: If the leader is an honest node, then the common output of the honest nodes is the private input v* of the leader
+	- BFT feasibility basically depends on the setup of the nodes
+		- Network Setup
+			- Sync Network: All the messages are received within a bounded time; Have a shared global clock
+			- Async network: Messages can take a infinite amount of time to deliver but will get delivered at the end; No Shared global clock
+			- Partially Sync: The network basically starts as an Async mode and transitions into sync network after a point called GST (Global Sync Time)
+		- Presence of PKI
+			- If PKI is present, we can ensure that the output of the nodes can't be forged
+	- Situation 1: N=4; f = 1;
