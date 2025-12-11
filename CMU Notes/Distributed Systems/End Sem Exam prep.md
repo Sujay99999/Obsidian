@@ -244,4 +244,126 @@
 			- Partially Sync: The network basically starts as an Async mode and transitions into sync network after a point called GST (Global Sync Time)
 		- Presence of PKI
 			- If PKI is present, we can ensure that the output of the nodes can't be forged
-	- Situation 1: N=4; f = 1;
+	- Notation of message, Message = v*; [S1] indicates message signed by S1. So, S1 sends (v*, [S1])
+	- Situation 1: N=4; f = 1; PKI; Synchronous network
+		- Cannot achieve Safety, as S1 (leader) can send v* to S2, and v** to S3 and S4
+		- Can achieve Termination, Agreement and Validity if the Non-leader nodes cross check with other
+			- Each non leader node basically signs the message recieved from leader and broadcasts it other non leader nodes
+			- Round 1: S1 sends v* to S2, and v** to S3 and S4 
+			- Round 2: S2 signs as (v*, [S1, S2]), sends to S3 and S4, where as S3 sends as (v**, [S1, S3])
+			- Termination - Achieved after 2 rounds
+			- Agreement - Tie breaker happens with majority of messages received
+			- Validity - PKI and Sync network ensures that the messages are not tampered
+	- Situation 1: N=4; f = 2; PKI; Synchronous network
+		- Case : S1 (leader) and S2 are byzantine
+			- Round 1:
+				- S1 to S2: (v*, [S1]) and (v**, [S1])
+				- S1 to S3: (v*, [S1])
+				- S1 to S4: (v**, [S1])
+			- Round 2:
+				- S3 to S4: (v*, [S1, S3])
+				- S4 to S3: (v**, [S1, S4])
+				- S2 to S4: (v**, [S1, S3])
+				- S2 to S3: (v*, [S1, S4])
+			- Coordinated attacks requires more rounds of cross checking
+	- Dolev - Strong Protocol (Sync Network, PKI)
+		- Uses Signature chain denoted by (v, [signatures]), consists of k distinct signatures and the first sign of the chain must be a leader such as (v, s1(v), s2(s1(v)), s3(s2(s1(v))))
+		- High Level overview
+			- Operates f+1 rounds
+			- Restricts the "valid" messages to be broadcasted
+			- In round 't', a node can only broadcast messages with 't' distinct signatures
+			- Always terminates, as it only has 'f+1' rounds![[Screenshot 2025-12-11 at 2.14.20 AM.png]]
+		- Case 1: f= 1; S1 (Leader) is Good
+			- Round 1:
+				- Set1, Set2, Set3 = {}
+				- S1 to S2 : (v*, [S1])
+				- S1 to S3 : (v*, [S1])
+				- S1 to S4 : (v*, [S1])
+			- Round 2:
+				- Set1, Set2, Set3 = {v*} 
+				- S2 to S3: (v*, [S1, S2])
+				- S2 to S4: (v*, [S1, S2])
+				- S3 to S2: (v*, [S1, S3])
+				- S3 to S4: (v*, [S1, S3])
+				- S4 to S2: (v*, [S1, S4])
+				- S3 to S3: (v*, [S1, S4])
+			- All Non leader nodes output v*
+		- Case 2: f= 1; S1 (Leader) is Byzantine
+			- Round 1:
+				- Set4, Set2, Set3 = {}
+				- S1 to S2 : (v*, [S1])
+				- S1 to S3 : (v*, [S1])
+				- S1 to S4 : (v**, [S1])
+			- Round 2:
+				- Set4 = {v**}, Set2, Set3 = {v*} 
+				- S2 to S3: (v*, [S1, S2])
+				- S2 to S4: (v*, [S1, S2])
+				- S3 to S2: (v*, [S1, S3])
+				- S3 to S4: (v*, [S1, S3])
+				- S4 to S2: (v**, [S1, S4])
+				- S3 to S3: (v**, [S1, S4])
+			- End : Set4,  Set2, Set3= {v**, v*}, outputs "None" as default
+		- (f<n) can work for Dolev - strong, as 3 properties are achieved
+		- In case of < f+1, its not safe, because it is possible to have all signatures from the byzantine nodes
+		- Case : Sync but NO PKI
+			- Only possible for f < n/3
+			- Possible as the Malicious nodes can simulate the honest nodes
+		- Case: Async with PKI
+			- Even with f=1 for n>=2, there is no safety achieved
+		- Case: Partially Sync with/ without PKI
+			- Works with f< n/3
+			- Post GST: All the honest nodes must terminate, need to do so if f byzantine nodes dont respond
+			- Pre GST: f node not responding might correspond to partition of those f nodes. Since we need to ensure majority i.e., f < (1/2)*(n-f) => f < n/3
+- PBFT
+	- Always safe, but not necessarily live
+	- Assumes PKI
+	- All nodes maintain a local log <index, op, status>
+	- Once a entry is committed, it stays committed
+	- n = 3f+1, and uses super majority 2f+1
+
+
+- Blockchains
+	- How cryptocurrency fits the idea of SMR
+		- State = Accounts associated with Public Keys and metadata
+		- Log = Financial Transactions
+	- Permission Setting and Permission less setting
+		- Permission
+			- Nodes running the protocol are known in advance
+			- Classis  BFT protocols use this
+		- Permission less
+			- Nodes can join/ leave i.e., A participating node doesnt know about others
+			- All the nodes must maintain consensus
+			- Cryptocurrencies require this - Nakamoto consensus
+	- Nakamoto Consensus
+		- Longest Chain consensus (abstract)
+			- Can fit with both permission and permission less setting
+			- Nodes are initialized with a hard coded genesis block
+			- In each round
+				- Choose one node L as the leader for the round r
+				- Node L proposes a set a blocks, each specifying a single predecessor block
+				- Blocks are gossiped amongst each other
+			- Consensus is achieved
+				- Blocks can be understood as proposed values
+				- As a result, we can have a multiple chains of blocks creating, where the longest chain wins
+				- Leaders vote on which fork to pick by appending the blocks
+				- Honest nodes append to the longest chain
+			- In order to ensure safety and liveness for SMR, we have some conditions
+				- Genesis block exists
+				- Leader is randomly selected, verifiable and cannot be influenced
+				- Every block produced by the Round 'r' leader must have its block that belongs to a previous round
+			- Satisfies Safety and Liveness for f at most 49 percent
+			- Forks and rollbacks are possible in Longest chain consensus than compared to classic BFT algorithms
+			- Blocks can be rolled back if Byzantine nodes are chosen as leaders
+				- k consecutive byzantine leaders can rool back k-1 honest blocks
+				- If there are 51% byzantine nodes, they can simply rollback how much ever they want
+			- Whenver > 50% of the nodes are honest, all blocks on the longest chain other than the last k can be considered finalized, where 'k' is determined by clients
+		- Proof - of - work for Permissionless setting
+			- Uses "Sybil nodes"
+			- Use hash chains to organize blocks
+				- Provides an immutable append only data structure, which helps to validate the predecessor's block
+				- Hashing has "Collision resistance", makes it hard to break it
+				- Ledger of transactions is immutable
+			- Every node has a chance to be chosen to extend chains
+			- Chance is proportional to compute power, disabling the Sybil attack
+			- The assumption is that Majority of compute power is held by honest nodes
+			- Node is chosen as leader if the crypto puzzle is chosen i.e. Find nonce that breaks it
