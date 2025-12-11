@@ -156,13 +156,36 @@
 		- Digital signatures provide integrity similar to MACs for symmetric encryption
 	- TLS - Transport Layer Security
 		- TLS uses both Asymmetric to bootstrap the symmetric keys and Symmetric crypto for fast communication
-		- Steps for TLS
-			- Client performs a handshake with Server as part of TCP
-			- Client gets the Public key of server, and sends a M = Enc(PubK(s), Premaster secret)
-			- Server decrypts the M, and stores the Premaster secret
-			- Client and server now communicate using symmetric encryption with PS
 		- Issues with TLS
 			- Forward Secrecy - If the messages are recorded now, and broken in future, will it compromise the transactions due to the fact that we used Long term keys
 			- Authenticity - How can client get server's public key safely
 		- DH Key exchange
+			- Solves Forward secrecy because of the fact the secrets a and b are used per sessions
+			- Relies on the fact that Its hard to crack to Discrete Log problem
+			- Not secure against Man in the middle attack
+		- PKI enables authenticity for Public keys, where they provide certificates (binds the public key to another entity E)
+		- Steps for TLS
+			- Client performs a handshake with Server as part of TCP along with Rb and Rs. The Rb and Rs are called randomness to prevent replay attacks
+			- Server sends the certificate to client, through which the client gets the server's public key. Along with certificate, server also sends the DH key signed with its private key i.e., {g^a mod p}PriK(server), to prevent MITM attack
+			- Client similarly sends the g^b mod p
+			- Client and server each derive the symmetric keys from Rb, Rs and PS
+			- Client and server now exchange MACs
+			- Client and server now communicate using Authenticate encryption 
+
+
+- Internet Content Delivery
+	- DNS
+		- Early version: Maintain a text file called "hosts.txt", where the servers retrieved updated list every time to maintain the host names
+		- Goals of the DNS = Scalability, Highly Available and Correctness + Fast lookups
+		- DNS has Hierarchical Distribution, which is opposite of Flat namespace, Centralized administrator and Centralized storage
+		- How Hierarchal distribution/ namespace works
+			- Top level Domains
+				- Registered globally
+			- Domain names
+				- Can be registered from the authority managing a top level domain
+			- Subdomains
+				- Managed by Domain adminstrator
+		- DNS Zones 
+			- Contiguous section of the namespace
+			- Managed by the specific organization
 			- 
