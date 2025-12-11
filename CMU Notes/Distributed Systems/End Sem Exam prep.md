@@ -112,3 +112,57 @@
 			- Fire and Forget - Very Fast
 			- Synchronous Send - Blocks the message send for others
 			- Asynchronous send
+		- Messages in Kafka are poll based, which improves the throughput by batching
+		- Consumers read the data from the partitions by "pulling the updates", which enables to design for "average load" rather than peak load, and its done by storing the read offsets for each partition
+		- More partitions = More parallelism = More performance for consumers
+		- No -order guarantee for records across per-topic partitions
+		- Kafka guarantees "At-least once delivery"
+		- Replicas in kafka are only preventing data loss, doesnt impact parallelism
+		- The Acks required for producer to commit the messages (for all replicas), determine the latency vs durability tradeoff
+		- Kafka uses zookeper/ raft to store the metadata
+
+
+
+- Security in Distributed Systems
+	- What is Security mean
+		- Confidentiality: An adversary shouldn't read the messages
+		- Integrity: An adversary can't tamper the message without being detected
+		- Authenticity: How does the sender/ receiver know that the message comes from the person it came from
+	- Symmetric Key Model
+		- Sender and Receiver have a pre-shared secret key
+		- Confidentiality - Use encryption algorithms to encrypt the M with K to produce C and vice versa
+		- IND-CPA is a technique to understand if the encrpyption is secure or not i.e.,
+			- Adversary basically sends Alice two different messages M0 and M1 and asks Alice to encrypt using the K it has.
+			- Then once the adversary gets back C0 and C1, if the adversary is able to predict the K by more than 1/2, then the encryption is compromised
+		- One time pad i.e., Encryption  = XOR of K and M passes IND-CPA if the keys are used for one time only. If we use more than one time, it compromises the encryption
+		- Block ciphers modes of operation
+			- Generally, we can encrypt the messages using the Block ciphers, even though they don't fall under the perfect security, it is very hard to break by the computationally bounded adversary
+			- There are 2 modes of operations
+				- ECB - Electronic Code Book
+					- We chop the Message into pieces of N bits, and each chunk is encrypted with K bit key
+					- Not IND-CPA secure, as the encryptions are deterministic
+				- CTR - Counter Mode Encryption
+					- In addition to the chunk of N bits, we add a unique running counter to get that randomness in the output
+					- IND-CPA secure
+			- ECB and CTR ensure confidentiality, but lacks authenticity and integrity
+		- MAC - Message Authentication Codes
+			- MAC is similar to Checksum for the content, where the Sender sends both the encryption of message and MAC as well
+			- Hash functions are deterministic and fast to compute
+		- Authenticated Encryption is technique that uses both MAC and encryption to guarantee Confidentiality and Integrity. This still suffers from Authenticity due to replay attacks
+		- we can prevent replay attacks by using Nonce
+	- Asymmetric cryptography
+		- The key is split into 2 parts - Public key and Private key
+		- Everyone can encrypt using the public key, where as the receiver can only decrypt it
+		- Digital signatures provide integrity similar to MACs for symmetric encryption
+	- TLS - Transport Layer Security
+		- TLS uses both Asymmetric to bootstrap the symmetric keys and Symmetric crypto for fast communication
+		- Steps for TLS
+			- Client performs a handshake with Server as part of TCP
+			- Client gets the Public key of server, and sends a M = Enc(PubK(s), Premaster secret)
+			- Server decrypts the M, and stores the Premaster secret
+			- Client and server now communicate using symmetric encryption with PS
+		- Issues with TLS
+			- Forward Secrecy - If the messages are recorded now, and broken in future, will it compromise the transactions due to the fact that we used Long term keys
+			- Authenticity - How can client get server's public key safely
+		- DH Key exchange
+			- 
