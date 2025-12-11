@@ -78,3 +78,37 @@
 				- Sender sends the message but doesn't know to whom its sending
 				- Allows us to deal with addition/ change of nodes
 	- Pub-Sub basically falls in the category of "Time uncoupled and Space uncoupled"
+	- Two types of subscription models
+		- Topic Based
+			- Events/ messages are classified into predefined topics, where the subscription receives events from certain topics
+			- Uses only one constraint = Equality of the topic name
+		- Content Based
+			- Events/ messages has multiple attributes which do then get categorized accordingly
+			- Uses multiple constraints over data such as equality, regex, etc
+	- We don't use the concept of "Centralized server" in pub sub, due to the distributed system problems such as Reliability, Replication and fault tolerance.
+	- Kafka solves this problem by creating a network of brokers in between which solves time, space coupling as well as the distributed system problems
+	- Event routing algorithms - Algorithms which distribute the events from pubs to subs
+		- Flooding
+			- Broadcasting all the events to all the nodes, where the individual node filters the data accordingly
+			- Uses underlying multicast framework to achieve this
+			- Can result in lot of unnecessary traffic
+		- Filtering
+			- Publisher basically sends to the nearest broker, which in turn maintains a routing table for all the brokers/ subscribers, based on the subscriptions
+			- So, the broker applies a filtering/ matching function before sending to subscriptions based on the subscription they have
+			- The challenge is that it doesn't scale well with number of subscriptions, and if the subscriptions change, there has to be a lot of changes across the broker network
+		- Rendezvous
+			- These are the specific broker nodes, which handles the subset of event space
+			- The routing tables are only present on the rendezvous nodes, and they are built for it
+			- Pub and Sub nodes basically have compute functions
+				- Subscription Node(s) = SN(s), which takes a subscription and returns the rendezvous node responsible for that subscription
+				- Event Node(e) = EN(e), which takes a event, returns the rendezvous node responsible for matching event against the subscriptions in the system
+				- Can be challenging for content based subscriptions
+	- Kafka 
+		- Consumers poll data rather than the brokers pushing the data. It simplifies the idea of backpressure
+		- Data/ Records is categorized as topics (topic is a stream of records), where each of the topic is split as partitions, and each of the partitions are again replicated
+		- Within the replicas, it generally uses the Leader-follower pattern, where the leader handles the writes and followers handles the reads
+		- Partitions are "Append only log"
+		- Producer chooses which partition to send the record to (Such as Hash of Key) and also sends the records at their own pace
+			- Fire and Forget - Very Fast
+			- Synchronous Send - Blocks the message send for others
+			- Asynchronous send
