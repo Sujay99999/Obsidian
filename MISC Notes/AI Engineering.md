@@ -21,4 +21,20 @@ Add additional prompt "Think step-by-step"
 		- Agents are good when we need "Decision Making" beyond the Simple rule book.
 		- Agents can be skipped if the Query can be solved using LLM + Few-shot Prompting/ Chain-of-Thought prompting other prompting techniques
 - Workflows
-- 
+
+
+
+
+- How to enable Reasoning and Planning in Agents
+	- Reasoning in LLMs
+		- So, LLMs always performs well on "Pattern Recognition" and "Conceptual Correlation", due to the core idea of pattern repetition.
+		- In the subject of Cognitive sciences, we have this concept of "System 1 vs System 2 thinking", where System 1 thinking is associated with "Direct Pattern Matching and Quick responses", where as the System 2 thinking is associated with "Strong Logical reasoning with thorough planning and execution"
+	- In order to bring the best reasoning capabilities of the LLMs, we have some techniques such as 
+		- Chain of Thought prompting
+			- We break down the complex tasks and then answer. By generating a series of coherent thoughts, the model can better articulate the problem with better understanding and debugging
+			- When we have any prompt "Do the task 1", which is a Zero shot Chain of Thought process, we can improve the prompt by "Do the Task 1. Take the reference of task 0. **Think Step by Step**"
+		- Plan and Execute Strategy
+			- So, when we have a complex task, we can break it down within the prompt by saying "Plan towards the Task and then Execute it", similar to how we develop Spec files before development.
+		- ReAct Strategy
+			- "Reasoning + Action" is basically a strategy to Interleave the Reasoning tasks with Action Tasks, where LLM goes through a cyclic process to dynamically create plans and execute and fine tune in the next iterations.
+			- ReAct is typically more faster than 
