@@ -37,4 +37,7 @@ Add additional prompt "Think step-by-step"
 			- So, when we have a complex task, we can break it down within the prompt by saying "Plan towards the Task and then Execute it", similar to how we develop Spec files before development.
 		- ReAct Strategy
 			- "Reasoning + Action" is basically a strategy to Interleave the Reasoning tasks with Action Tasks, where LLM goes through a cyclic process to dynamically create plans and execute and fine tune in the next iterations.
-			- ReAct is typically more faster than 
+			- ReAct is typically more faster than Plan + Execute strategy to generate final answer, consuming less tokens. its well suited for Medium tasks than compared to Plan + Execute which is suited for complex tasks
+
+- Building an Agent
+	- 
