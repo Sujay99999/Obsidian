@@ -40,4 +40,7 @@ Add additional prompt "Think step-by-step"
 			- ReAct is typically more faster than Plan + Execute strategy to generate final answer, consuming less tokens. its well suited for Medium tasks than compared to Plan + Execute which is suited for complex tasks
 
 - Building an Agent
-	- 
+	- 100 strike price
+		- Sell put for 85 pe - preimum 10 = 1000
+			- Scneario 2: price is 80; -8500+1000 = -7500 
+				- 
