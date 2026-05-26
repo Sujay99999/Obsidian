@@ -40,7 +40,43 @@ Add additional prompt "Think step-by-step"
 			- ReAct is typically more faster than Plan + Execute strategy to generate final answer, consuming less tokens. its well suited for Medium tasks than compared to Plan + Execute which is suited for complex tasks
 
 - Building an Agent
-	- 100 strike price
-		- Sell put for 85 pe - preimum 10 = 1000
-			- Scneario 2: price is 80; -8500+1000 = -7500 
-				- 
+	- Session and Memory
+		- What is Session
+			- The session is the entire conversation you have with an agent, where all the interactions are noted
+			- A session basically captures 3 things
+				- Interactions between agent and human
+				- State of the agent at each point i.e., Current prompt; Past interactions, Status of the agent and User preferences such as credentials
+				- Tools available
+			- As the interaction progresses, the session dynamically updates to reflect the changing conversational flow, and state of agent, which **enables the agent to adapt and respond effectively**.
+		- Memory is used to persist the "Session Information".
+		- There are different modes of memory persistance
+			- Short Term Memory
+				- Retains the data only until the session is present. 
+				- Its cleared once the session is reset. 
+				- It depends on the Context Window; But the session always tends to perform poorly when the context becomes huge
+			- Long Term Memory
+				- Retains memory for much longer time, providing a better user experience
+				- Helps to create "Learned patterns"
+				- Memory can be updated either sync or in async depending on requirements
+			- Episodic Memory
+				- Type of Long memory, where you can recall the particular experiences such as Agent traces, tool usages, etc
+				- Helps in maintaining the coherency of the Agent history and experiences
+			- Semantic Memory
+				- This type of memory helps to personalize the experience, as the agent can modify certain data, to reflect the updates in the memory such as KB
+	- Single Pass Agent vs Continuous Execution
+		- A single pass agent has clear cut steps, which are followed in a linear fashion. Doesnt account for any fallback or dynamic thinking during the execution, when an error pops
+		- Agents based on **Continuous Execution** resolves this problem by "Dynamically adapting on the output".
+		- So, when a user sends "Prompt + context" to the LLM, the LLM decides on what tools have to be used for the task, uses them, gathers the output data, and then decides whether to get more information or generate output.
+		- This continuous execution can either use "ReAct" or "Plan and Execute" staategy
+	- Control and Validate the Agentic flow
+		- The core idea os Agent flow is same as above, but can be extended by integrating multiple sub agents depending on how complex the flow has to be present
+	- Human in the Loop
+		- This enforces human intervention for the agents tasks to ensure accountability on critical steps
+	- MCP
+		- Open protocol for integrating the LLMs and tools by enabling bi-directional communication with authentication and security
+		- MCP has 4 parts
+			- Host - Agents and programs
+			- MCP Client - Clients from the Host that connect with the MCP server of the tools, and this connection is 1:1 mapping
+			- MCP Server - Server exposing the tool
+			- Server tools - Can be any tool such as Email, Slack, etc
+		- Request/ Response flow is similar to HTTP protocol without handshake
