@@ -80,3 +80,6 @@ Add additional prompt "Think step-by-step"
 			- MCP Server - Server exposing the tool
 			- Server tools - Can be any tool such as Email, Slack, etc
 		- Request/ Response flow is similar to HTTP protocol without handshake
+
+
+- 
