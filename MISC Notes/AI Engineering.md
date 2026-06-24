@@ -9,6 +9,15 @@ CRAFT a prompt
 - Tone
 Add additional prompt "Think step-by-step"
 
+- Basic parameters for LLM calls
+	- Temperature
+		- Controls the randomness i.e., 0.0 for deterministic and 1.0 for creative outputs
+		- Lower values such as 0.0 - 0.3 guarantee factual outputs
+		- HIgher values such as 0.6 - 0.9 provide creative answers
+	- Max Tokens
+		- Limits the size of the output
+		- Token is the fundamental unit of the LLMs where ~4 characters = 1 token
+
 - Agentic AI
 	- What is the difference between LLM and AI agent
 		- LLMs are basically language models which have been trained across vast amount of data, but they dont have access to the tools. Most of the LLMs simply use RAG for the getting the answers based on the prompt.
