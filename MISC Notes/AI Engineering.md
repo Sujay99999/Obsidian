@@ -17,6 +17,17 @@ Add additional prompt "Think step-by-step"
 	- Max Tokens
 		- Limits the size of the output
 		- Token is the fundamental unit of the LLMs where ~4 characters = 1 token
+- How tools are integrated into the LLM calls
+	- Tools are defined using JSON Schema so the LLM understands what functions are available.
+	- The LLM doesn't execute tools directly - it requests tool calls that you execute i.e., LLM doesn't care on the tool functionality, it takes an call on if the tool has to be used for a operation or not based on the tool description and parameters. This implies that any custom tools created must have legitimate and crisp tool descriptions
+	- In a vanilla implmentation of LLM calls with tools, it is the responsibility of the user to ensure error handling/ throttling etc of the tool usage by the LLMs
+	- But if we use any custom frameworks such as Langchain/ Strands, the error handling is generally taken care of i.e.,  the LLM doesn't fix your broken tool — it just reacts to the error message you (or the framework) sends back. For example if get_weather fails, the framework sends "Error: API timeout" back to the LLM, and the LLM might say "I couldn't get the weather, try again later." It's still just text — the LLM never touches your code.
+	- There is a high possibility that "With higher number of tools", the context of the message to LLM significantly increases leading to higher token usage. It is again the responsibility of the developer to ensure that the context provided to LLM is as small as possible. There are multiple ways to resolve this
+		- Using RAG for tools which can help to decide the subset of the tools required for the use case
+		- We can also have LLM as a router which decides which specific subagents are invoked (We create subagents with specific subset of tools)
+		- Custom frameworks generally provide inhouse solutions for this i.e., Langchain has a solution called "ToolRetreiver" which has its own vector store
+	- 
+
 
 - Agentic AI
 	- What is the difference between LLM and AI agent
