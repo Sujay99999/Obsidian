@@ -73,4 +73,84 @@
 	  Runnable runnable =
         () -> { System.out.println("Lambda Runnable running"); };
 	  ```
-	- 
+	- Starting a Thread using this Runnable interface
+	- ```
+	  Runnable runnable = new MyRunnable(); // or an anonymous class, or lambda...
+
+Thread thread = new Thread(runnable);
+thread.start();
+	  ```
+- Using Thread class directly vs Runnable interface
+	- Its preferred to use the `Runnable` interface than compared to the Thread class, as its more compatible with the Thread pool queueing process.
+- Pausing a thread
+	- We can pause a thread using the static method of thread class called `Thread.sleep()`, which takes milliseconds as parameter.
+- Stopping a thread
+	- Java threads and the Runnable interface dont explicitly provide the `stop()` methods, which can be used without any issues. Thread class does provide `stop()` method, but its deprecated and when used, it can cause issues such as unpredictability, especially when the current thread and other threads are performing some operations on data, and the current thread callss`stop()`, leaving them in a unkwnown state.
+	- So, it is the responsibility of the user to create the logic of stopping of threads if he needs it explicitly i.e., A thread always compeltes the execution when the `run()` method exits from completing the execution.
+	- ```
+	  public class MyRunnable implements Runnable {
+
+    private boolean doStop = false;
+
+    public synchronized void doStop() {
+        this.doStop = true;
+    }
+
+    private synchronized boolean keepRunning() {
+        return this.doStop == false;
+    }
+
+    @Override
+    public void run() {
+        while(keepRunning()) {
+            // keep doing what this thread should do.
+            System.out.println("Running");
+
+            try {
+                Thread.sleep(3L * 1000L);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+
+        }
+    }
+}
+
+	  ```
+  - ```
+    public class MyRunnableMain {
+
+    public static void main(String[] args) {
+        MyRunnable myRunnable = new MyRunnable();
+
+        Thread thread1 = new Thread(myRunnable);
+
+        thread1.start();
+
+        try {
+            Thread.sleep(10L * 1000L);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        myRunnable.doStop();
+    }
+}
+	  ```
+	  - In this example, we can see that the Main thread starts the execution, then creates a new thread called `thread1` using the custom class implementing the Runnable interface.
+	  - At this moment, the `run()` starts executing using the `thread1`, where it keeps printing at some intervals.
+	  - But in parallel, the Main thread continues the execution and finds the peice of code to sleep for 10 sec using static method `Thread.sleep()`.
+	  - Once the timer is completed, the Main thread then explictly toggles the boolean which is shared constant in this program, and this acts as a signal. This works because the methods within the class use `synchrnoized` keyword, which explicitly allows only one thread to access the state of the variable.
+	  - So, in `thread1` pov, the moment it checks for the boolean and finds it as false, then it returns, completing the execution
+	  - But the important pointer is that the Main thread is completing the execution before the `thread1` exit, but the entire program is completed only when the `thread1` is completing the execution {{Doubt: why is the behavior like this, we are specifying the thread1 as a daemon thread, right?; Oh okay got it, the JVM runs until all threads complete execution}}
+	  - This is because he JVM runs until all threads complete execution.
+  - Daemon threads
+	  - When you create a thread and mark it as `thread.setDaemon(true)`, then you are explicitly telling the JVM that the program can be completed once the Main thread + Other Non-Daemon threads compltetes their execution.
+	  - But this also implies that the daemon threads are also stopped which can lead to unexpected behavior
+  - `join()` method
+	  - We can use this method to explicitly ensure that one thread waits for the execution of another thread using this method
+	  - So if a thread calls explicitly `thread.join()`, then the Main thread waits until this thread completes the execution and then only exits the program.
+
+
+### Virtual Threads
+- 
