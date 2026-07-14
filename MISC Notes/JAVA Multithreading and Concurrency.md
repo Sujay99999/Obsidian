@@ -167,10 +167,25 @@ thread.start();
 	  - We can use this method to explicitly ensure that one thread waits for the execution of another thread using this method
 	  - So if a thread calls explicitly `thread.join()`, then the Main thread waits until this thread completes the execution and then only exits the program.
 
-#### Concurrency vs Parallelism
-- 
+---
+### Concurrency vs Parallelism
+- Concurrency and parallelism are two different concepts 
+- Concurrency
+	- When a application is said to be concurrent in nature, it means it can be decomposed into tasks, that can be executed out of order or in partial order
+	- Generally, we can have a single core CPU running different tasks of a concurrent application, as it can switch between the tasks, giving the illusion of smooth run.
+	- But you cannot have 2 different programs getting executed at the same time, but this doesnt mean that 2 programs cant be in progress state, they are simply not executed at the same time
+	- But the restriction is that "There is only one CPU executing the tasks **one at a time**"
+- Parallelism
+	- An application is said to be parallel, if it has tasks that can be run across multiple CPU cores using threads.
+	- These applications  generally get the maximum efficiency out of the hardware
+- An application which can be parallelized is always concurrent, but not all concurrent applications can be run in parallel
+- Simply put, _concurrency_ refers to how a single CPU can make progress on multiple tasks seemingly at the same time, where as _Parallelism_ on the other hand, is related to how an application can parallelize the execution of a single task - typically by splitting the task up into subtasks which can be completed in parallel
+- Simple example
+	- One coffee machine serving 2 different lines of customers is similar to concurrent application because at the end, it is one machine serving them, and you can have the customers from 2 queues interwoven
+	- Two coffee machines serving 2 individual lines of customers is similar to parallel application, and the two coffee machines are independent of each other
 
 
+---
 ### Single Threading
 - Single Threading concurrency model is a concept where "A single thread is created and **is responsible for executing more than one task**", rather than spinning up multiple threads for different tasks.
 - Simply put, this is a trade off model than compared to Multi threading concurrency model, where it is expected to have shared state or consistency issues like Deadlocks, starvations, etc.
@@ -190,4 +205,6 @@ thread.start();
 - So, it can thought of "One machine handling multiple single threaded processes".
 - But, in the case where these process have to communicate, they have to implement some kind of messaging model using either sockets, etc
 - This is a very good model for implementing microservice architecture within single machine, as each of the process is separate from each other, but needs to communicate
-#### 
+
+---
+### Multi threading concurrency models
