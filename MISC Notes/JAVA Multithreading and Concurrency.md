@@ -11,9 +11,25 @@
 ### Why MultiThreading
 - Single big reason to introduce MultiTasking and MultiThreading in general is to **Reduce the CPU cycle wastage**. In most of the cases, when CPU executes the task, it often reads data from disk or Sends some network request, which can be time consuming, and if we expect the CPU is wait idle during the time, then we end up wasting the CPU cycles.
 - Instead, using Multithreading, we can breaakdown the tasks of the multiple applications across multiple threads and these CPUs can be allocated the tasks in such as way that they dont sit idle. This helps is improving the efficiency of CPU as well as the IO capabilities
+- - So, in overall Multithreading allows to have higher throuput, the reason being that creating thread is a lightweight task than compared to creating another process
 
 ### Issues with MultiThreading
 - Mullithreading can cause multiple issues such as Race conditions, Deadlocks, Congestion, etc and lot of concurrency related issues
+
+#### Definitions
+- Program
+	- A program is basically some set of instructions along with some data (may be on disk or cloud), which is executed by the OS
+	- Simple example is "Executing a python script"
+	- When we run a program, it essentially means that we are asking the OS's kernel to basically a process (which is an environment), in which this program runs
+- Process
+	- A process is "Program in execution"
+	- A process basically is a execution environment which contains all the data that is required to execute the set of instructions such as System data, user data, CPU based data, etc
+	- A program can contain multiple processes, but each process is mapped to one program
+	- Any 2 processes dont share any resources at all
+- Threads
+	- It is smallest unit of execution
+	- It is responsible for the executing the instructions serially
+	- We can have multiple threads sharing the same resources or owning a global shared data, and this is where we have to be careful
 
 --- 
 ### Java Threads
@@ -151,6 +167,27 @@ thread.start();
 	  - We can use this method to explicitly ensure that one thread waits for the execution of another thread using this method
 	  - So if a thread calls explicitly `thread.join()`, then the Main thread waits until this thread completes the execution and then only exits the program.
 
-
-### Virtual Threads
+#### Concurrency vs Parallelism
 - 
+
+
+### Single Threading
+- Single Threading concurrency model is a concept where "A single thread is created and **is responsible for executing more than one task**", rather than spinning up multiple threads for different tasks.
+- Simply put, this is a trade off model than compared to Multi threading concurrency model, where it is expected to have shared state or consistency issues like Deadlocks, starvations, etc.
+- But in Single threaded model, one single thread executes different tasks by switching between them.
+- NodeJS uses Single threaded Server design, which resonates with Event driven architecture as well, where it basically has "Event loop", which is like a main single thread, looking for events or tasks to execute
+- Advantages of Single Threading architecture
+	- Provides **Full thread visibility** allowing the developer to provide scope to design task switching between tasks
+	- There is no concept of "Shared state", hence removing issues such as Deadlock, Race conditions etc.
+- Disadvantages
+	- A single thread can utilize only one CPU for executing the instructions, hence not fully utilizing the multi core/ CPU architecture
+	- Any kind of blocking operations have to be handled by background threads. NodeJS provides inbuilt support for this.
+	- If we wanted to scale Single threaded architecture, we need to use "Same threaded architecture"
+
+#### Same threaded Architecture
+- Same threaded architecture is basically an upgrade of "Single threaded concurrency model", utilizing the fact that machine has multiple cores instead of one.
+- But this is different from "Multithreaded Architecture", because the threads here dont share any data unlike the multithreading.
+- So, it can thought of "One machine handling multiple single threaded processes".
+- But, in the case where these process have to communicate, they have to implement some kind of messaging model using either sockets, etc
+- This is a very good model for implementing microservice architecture within single machine, as each of the process is separate from each other, but needs to communicate
+#### 
