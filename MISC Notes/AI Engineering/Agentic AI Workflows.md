@@ -32,3 +32,10 @@ public static void main(){
 	}
 }
 ```
+
+---
+### Orchestrator Pattern
+#### Role or Orchestrator
+- Break down of the custom prompt/ question into a detailed research plan with subtopics, so that they can be delegated to custom sub-workers
+	- Hence the `System prompt` + LLM invocation of the Orchestrator should enforce that the output is a research plan with detailed steps
+	- Orchestrator never knows about the subworkers present at its disposal (If we need a intelligent routing of subtasks to specialized worker agents), then we can add another step
