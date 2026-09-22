@@ -1,0 +1,3 @@
+- What are vectors
+- How Raw data is converted to Vectors/ Embeddings
+- What is a Vector database
