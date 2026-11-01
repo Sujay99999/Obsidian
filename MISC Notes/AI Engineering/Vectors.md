@@ -25,7 +25,3 @@
 				- Quantization and Compression
 	- How the vector database is different from the Traditional database
 	- What is Hybrid search and why is preferred over classic semantic search
-
-```
-python examples/basic_inference.py --weights-dir ./weights --person-image examples/data/model/straight.jpg --garment-image examples/data/standalone/1.jpg --category tops --garment-photo-type flat-lay --device mps --num-timesteps 30 --seed 42 --guidance-scale 1.0 --output-dir experiments/m5/guidance/1.0 python examples/basic_inference.py --weights-dir ./weights --person-image examples/data/model/straight.jpg --garment-image examples/data/standalone/1.jpg --category tops --garment-photo-type flat-lay --device mps --num-timesteps 30 --seed 42 --guidance-scale 1.5 --output-dir experiments/m5/guidance/1.5 python examples/basic_inference.py --weights-dir ./weights --person-image examples/data/model/straight.jpg --garment-image examples/data/standalone/1.jpg --category tops --garment-photo-type flat-lay --device mps --num-timesteps 30 --seed 42 --guidance-scale 2.0 --output-dir experiments/m5/guidance/2.0
-```
