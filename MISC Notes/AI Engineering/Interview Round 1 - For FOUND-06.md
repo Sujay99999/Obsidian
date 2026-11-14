@@ -56,4 +56,31 @@ Ans:
 >  **Q2.1** **—** **Contextual Meaning Through Attention** - Consider the two sentences: “The crane damaged its wings” and “The crane lifted a steel beam.” Explain how self-attention can help the representation of “crane” reflect different meanings in these contexts. What changes through contextual processing?
 
 Ans:
-- 
+- When we have 2 same tokens with the same positional encoding passed onto the Self attention block, then each token embedding undergoes a set of operations which can be described in 2 steps
+	- Capture the contextual meaning of that embedding using the other embeddings
+		- This happens with the help of 2 vectors called Queries and Keys. These are 2 vectors which are produced for each token embedding.
+		- For a particular embedding, the query vector basically "Checks for the relevance of the particular token wrt other within a specific context"; One of the example can be "How this token (if it is an adjective) is impacting the meaning of other token (which is expected to be a noun)".
+		- For the same embedding, we also generate the Key vector which typically answers the above query. 
+		- The dot product of the query and the key vector depict the relevance of a specific token with other within a context, and this is called as "Attend to"
+		- So, in the given example, let us assume that the Context we are seeking is "How are these tokens related to infrastructure", which is essentially dictates on how the query vector is produced. The key vector essentially provides the answer for the same query
+		- So, for the Query vector asking "Which vector is more closely related to infrastructure, when checked for the specific vector `steel`", then ideally we have the key vector of `steel` and `crane` aligning more closely to it, which has higher dot product
+	- Update the current embedding with the above result to reflect the contextual shift
+		- Since the query and key vector dot product basically capture the contextual meaning, we also have to ensure that this has to be injected into the original embedding
+		- To perform this, we have a Value matrix generated for each of the embedding and then multiplied with the above dot product. This is essentially the "Delta" which we need to add back to the original embedding
+		- In the above example, we understood that `crane` is related to `steel` and `beam` when the context is infrastructure, but we havent modified the original embedding mapped to `crane`, and the delta produced is added, which essentially captures that semantic closeness.
+
+>**Q2.2** **—** **Queries, Keys, and Values** - Explain the conceptual roles of Query, Key, and Value vectors in self-attention. Describe the process by which a token uses them to gather information from other tokens. You don't need to derive the attention equation.
+
+Ans:
+- Query, Key and Value vectors are the 3 vectors which helps one individual token to capture the contextual meaning from the other token embeddings.
+- Simply put, 
+	- Query vector essentially captures - "It represents what the current token is asking when checked for relevance with other tokens". It can simply be like - "Am I (token 1) supposed to act as adjective for another token (token 2)"
+	- Key vector essentially captures - "What as a token I (token 2) represent when I am asked that question"
+	- Value vector essentially captures - "Okay, what is the actual contextual meaning that has to be passed on"
+
+>**Q2.3** **—** **Why Multiple Attention Heads?** - Why do transformers use multi-head attention rather than relying on one attention operation? What additional capability does this provide, and what should we avoid assuming about the role of each head?
+
+Ans:
+- Single attention operation works with the embedding vector with single set of Query, Key and Value matrices. This single attention works on single "View" of the context, where as the Multi head attention basically tries to work on different views of the context using different sets of 3 matrices
+- Within Multi head attention, we can ensure that each head specialize with a specific context and averaging out rather than relying on generalistic context based single head attention
+- Multi head attention blocks can be parallelized as each head computation is independent of the other
