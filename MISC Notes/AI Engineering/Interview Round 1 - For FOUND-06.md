@@ -13,4 +13,19 @@ Ans :
 Ans:
 - Okay, there are many pre requisite steps within the "Self attention/ Multi Head attention blocks" of the transformer. 
 - Step 0: Convert the Plain text into Tokens using the Tokenizer
-	- What is Tokenizer: 
+	- Each of the model basically contains a perdefined map where tokens are mapped to individual vectors
+	- This map is built during the training process/ fine-tuning process, where each vector mapped to a token has a semantic meaning
+	- These vectors are sometimes known as embeddings.
+	- So when a model sees a new prompt, then the tokenizer basically splits them based on the token vocabulary the model uses and then for each of the token, its mapped to its embedding
+- Step 1: Positional encoding
+	- Within the transformer, the contextual meaning of prompt is basically due to 2 main reasons:
+		- Each token meaning depends on each other token in the prompt
+		- The position of the token within the prompt
+	- Since the architecture of the Transformers is different than the RNN, where RNN ensures that the current token contextual meaning depends on the previous tokens, where as the Self/ Multi attention blocks dont work in this manner, we need some way to embed the positional meaning, and this is solved by the Positional Encoding
+	- There are multiple algorithms to inject the position into the embeddings before the self attention blocks
+
+> Q1.3 **—** What Happens Inside One Transformer Block? - Imagine tracing the representation of a single token through a typical transformer block. Explain the distinct roles of attention, the feed-forward network, residual connections, and normalization. What does each contribute to processing the token?
+
+Ans:
+- Transformers are categorized into 3 separate families i.e., Encoder only, Decoder only and Encoder-and-Decoder
+- So, essenti
