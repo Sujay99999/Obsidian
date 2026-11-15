@@ -1,3 +1,16 @@
+
+New Links:
+- https://medium.com/@xiaxiami/rnn-vs-transformer-a-deep-dive-from-fundamentals-to-applications-ee4d700dd152
+- https://www.geeksforgeeks.org/deep-learning/rnn-vs-lstm-vs-gru-vs-transformers/
+- https://medium.com/@karthikmulugu/why-transformers-are-better-than-rnns-a-practical-deep-dive-1a789ee67adb
+- https://medium.com/@sonalprasad.sp/transformer-models-part-2-transformer-block-transformer-architecture-dbc20408aaed
+- https://www.youtube.com/watch?v=ZwgNiyJOABI&t=151s
+- https://rahulrajpvr7d.medium.com/what-are-the-query-key-and-value-vectors-5656b8ca5fa0
+- https://magazine.sebastianraschka.com/p/understanding-and-coding-self-attention
+- https://sebastianraschka.com/blog/2023/self-attention-from-scratch.html
+- https://medium.com/@xiaxiami/self-attention-vs-cross-attention-from-fundamentals-to-applications-4b065285f3f8
+
+
 > Q1.1 — Why Transformers? - What limitations of earlier sequential architectures such as RNNs motivated Transformers? Explain what fundamentally changed in how sequence information can be processed, and why that matters.
 
 Ans :
@@ -84,3 +97,67 @@ Ans:
 - Single attention operation works with the embedding vector with single set of Query, Key and Value matrices. This single attention works on single "View" of the context, where as the Multi head attention basically tries to work on different views of the context using different sets of 3 matrices
 - Within Multi head attention, we can ensure that each head specialize with a specific context and averaging out rather than relying on generalistic context based single head attention
 - Multi head attention blocks can be parallelized as each head computation is independent of the other
+
+>**Q2.4** **—** **Causal Masking and Future Information** - A GPT-like model processes a training sequence containing several tokens. Why must it prevent an earlier position from attending to later positions? Explain how causal masking enforces this and why it matters for next-token prediction.
+
+Ans:
+- Since GPT model's purpose is to generate the most probable token with the set of tokens which are positioned before the current token i.e.,  the current token must not be influenced by the future tokens
+- But the original implementation of the Self attention block, takes in the input from all the surrounding tokens, must be modified in such a way that, the `attention` from the guture tokens are zero for all its proceeding tokens
+- Once the attention scores are calculated, we apply the softmax operation i.e., Normalization converting them to attention weights, and then we mask the attention weight matrix by converting all the cells where the row index > column index, and then we normalize again to ensure they are ready for the next attention block
+- Better way to perform the same operation is to mask the cells by replacing them as `-inf` instead of zero and then apply softmax only once
+
+>**Q3.1** **—** **Three Transformer Families** - Compare encoder-only, decoder-only, and encoder–decoder transformers. Explain how their information flow differs and give one task where each architecture is particularly appropriate.
+
+Ans:
+- Encoder Only
+	- The transformer block only consists of the Encoder block, which generally excels at "Understanding the contextual meaning of the input"
+	- Some of the use cases are "Text classification", "Token Classification"
+	- Within the component, each token can access all the other tokens within the sequence to generate the attention weights, hence it is bidirectional
+	- One of the available models is "BERT", which  is pretrained with two objectives: masked language modeling and next-sentence prediction
+- Decoder Only
+	- The transformer block only consists of the Decoder block, which generally excels at "Generating the next token based on the processed tokens"
+	- Some of the use cases are "Text generation"
+	- Within the component, each token can only access the previous tokens within the sequence to generate the attention weights, hence it is unidirectional
+	- One of the available models is "GPT", which belongs to "Casual Language Modelling"
+- Encoder and Decoder
+	- The transformer block consists both the Encoder and Decoder block, which generally excels at "Sequence to Sequence tasks"
+	- Some of the use cases are "Translation, where we have understand the essence of the input text and then generate the corresponding text", "Summarization, where we have understand which parts of the text have to preserved"
+	- Within the component, each token can onty access the previous tokens within the sequence to generate the attention weights, hence it is unidirectional
+
+> **Q3.2** **—** **Self-Attention vs Cross-Attention** - In an encoder–decoder model performing translation, how does information from the source sentence influence the decoder as it produces the target sentence? Distinguish the role of decoder self-attention from cross-attention.
+
+Ans:
+- There are 2 separate questions here
+	- How does information from the source sentence influence the decoder as it produces the target sentence
+		- Within the Decoder block of "Encoder-Decoder" using the Cross attention, its purpose is to generate the next token, but the attention has to come from the Input text within the Sequence to Sequence model, else it would be a simple text generation
+		- This is possible when the Decoder block uses the Queries from the Source Sentence encodings while calculating the Attention weights instead of using the queries from the current sequence which is "Already generated tokens for the decoder" 
+	- Distinguish the role of decoder self-attention from cross-attention.
+		- If the transformer uses a single input of sequence (i.e., Not a Sequence-to-Sequence), then Self-attention would suffice.
+		- But when we have the requirement of Translation or Summarization, then the output sequence must depend on the entire input sequence and this is possible with the cross attention
+
+
+> **Q3.3** **—** **Selecting the Right Architecture** - You are building two services: one classifies incoming customer messages into categories, and the other generates natural-language replies. Would you choose the same transformer architecture for both? Compare your options and explain the trade-offs without assuming there is only one valid solution.
+
+Ans:
+- Service 1: 
+	- Requirement: Classification of the Incoming message into buckets
+	- Best suited Transformer family: Encoder Only
+		- Classic use case of "Zero shot Text classification based on the Pre-defined Labels"
+- Service 2: 
+	- Requirement: Generation of replies from the given context
+	- Best suited Transformer family: Decoder Only
+		- Classic use case of "Text Generation"
+
+
+> **Q4.1** **—** **From Hidden States to Next-Token Selection** - After a prompt has passed through the transformer's layers, how does a decoder-only language model produce its next token? Explain the relationship between the final representation, vocabulary logits, token probabilities, and the selection of an output token.
+
+Ans: SKIPPED - NOT REQUIRED
+
+> **Q4.2** **—** **Autoregressive Generation** - Suppose a model generates a response containing five new tokens. Explain what happens after the first token is selected, how each subsequent token depends on the growing context, and why generation proceeds incrementally rather than producing all five tokens independently.
+
+Ans: SKIPPED - NOT REQUIRED
+
+>**Q4.3** **—** **Why Outputs Can Differ** - You send the same prompt twice to a language model and receive different responses. How can that happen if the model parameters and prompt are unchanged? Distinguish the model's predicted scores from the process used to select tokens.
+
+Ans:
+- 
