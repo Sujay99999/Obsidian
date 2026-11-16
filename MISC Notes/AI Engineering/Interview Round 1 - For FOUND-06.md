@@ -15,9 +15,10 @@ New Links:
 
 Ans :
 - All the models under the RNN family (RNN, LSTM and GRUs) are designed in such a way that the inference process is sequential in nature i.e., the current token generation depends on the "Current Hidden state vector" + "Previous Token", which means that during the text generation, this neural network should process the existing tokens before the current one
-- This sequential process of inference and training, made it very hard to achieve parallelism, costing us more time; This coupled with the Vanishing gradient issue of the hidden state vector made it hard for the long complex data
+- This sequential process of inference and training, made it very hard to achieve parallelism, costing us more time; 
+- This is also coupled with the Vanishing gradient issue of the hidden state vector only for the Vanilla RNNs made it hard for the long complex data; This issue isnt present within the LSTM and GRUs.
 - Both of these issues have led to rise in transformers, which operate in a fundamentally different manner i.e., It uses a concept of "Self attention", which essentially tries to compute the meaning of the current word/ token from all the surrounding tokens to capture the contextual meaning of that particular token
-- In this architecture, we basically compute each token pair similar to matrix multiplication, allowing us to parallelize the entire process i.e., computation for the current token takes in the current state of all other tokens
+- In this architecture, the training process which is more exhaustive can be parallelized unlike the RNNs, but the text generation is still sequential in nature.
 - One of the biggest advantages of transformers over RNNs is that we are able to parallelize the process which reduces the compute time (but with the cost of high memory) and at the same time provide better contextual meaning for long complex sentences.
   
   
@@ -26,9 +27,9 @@ Ans :
 Ans:
 - Okay, there are many pre requisite steps within the "Multi Head Self attention blocks" of the transformer. 
 - Step 0: Convert the Plain text into Tokens using the Tokenizer
-	- Each of the model basically contains a predefined map where tokens are mapped to individual vectors
-	- This map is built during the training process/ fine-tuning process, where each vector mapped to a token has a semantic meaning
-	- These vectors are sometimes known as embeddings.
+	- Each of the model basically contains a predefined map where tokens are mapped to individual token IDs
+	- This map is built during the training process/ fine-tuning process, where each ID mapped to a token has a semantic meaning, and this vocabulary is built specific to the tokenizer
+	- Then, these token IDs are mapped to vectors within the model. These vectors are sometimes known as embeddings.
 	- So when a model sees a new prompt, then the tokenizer basically splits them based on the token vocabulary the model uses and then for each of the token, its mapped to its embedding
 - Step 1: Positional encoding
 	- Within the transformer, the contextual meaning of prompt is basically due to 2 main reasons:
@@ -80,6 +81,7 @@ Ans:
 	- Update the current embedding with the above result to reflect the contextual shift
 		- Since the query and key vector dot product basically capture the contextual meaning, we also have to ensure that this has to be injected into the original embedding
 		- To perform this, we have a Value matrix generated for each of the embedding and then multiplied with the above dot product. This is essentially the "Delta" which we need to add back to the original embedding
+		- So, the final attention weights which are finally created are essentially `Weighted sum of the Value vectors`, where the weights come from the `Q.K` dot product.
 		- In the above example, we understood that `crane` is related to `steel` and `beam` when the context is infrastructure, but we havent modified the original embedding mapped to `crane`, and the delta produced is added, which essentially captures that semantic closeness.
 
 >**Q2.2** **—** **Queries, Keys, and Values** - Explain the conceptual roles of Query, Key, and Value vectors in self-attention. Describe the process by which a token uses them to gather information from other tokens. You don't need to derive the attention equation.
@@ -95,7 +97,7 @@ Ans:
 
 Ans:
 - Single attention operation works with the embedding vector with single set of Query, Key and Value matrices. This single attention works on single "View" of the context, where as the Multi head attention basically tries to work on different views of the context using different sets of 3 matrices
-- Within Multi head attention, we can ensure that each head specialize with a specific context and averaging out rather than relying on generalistic context based single head attention
+- Within Multi head attention, we can ensure that each head focuses on a specific relationship and then they are concatenated and transformed out rather than relying on generalistic context based single head attention
 - Multi head attention blocks can be parallelized as each head computation is independent of the other
 
 >**Q2.4** **—** **Causal Masking and Future Information** - A GPT-like model processes a training sequence containing several tokens. Why must it prevent an earlier position from attending to later positions? Explain how causal masking enforces this and why it matters for next-token prediction.
@@ -130,7 +132,7 @@ Ans:
 - There are 2 separate questions here
 	- How does information from the source sentence influence the decoder as it produces the target sentence
 		- Within the Decoder block of "Encoder-Decoder" using the Cross attention, its purpose is to generate the next token, but the attention has to come from the Input text within the Sequence to Sequence model, else it would be a simple text generation
-		- This is possible when the Decoder block uses the Queries from the Source Sentence encodings while calculating the Attention weights instead of using the queries from the current sequence which is "Already generated tokens for the decoder" 
+		- This is possible when the Decoder block uses the Keys and Value matrices from the Source Sentence encodings and Query matrices from the decoder while calculating the Attention weights instead of using them from the current sequence which is "Already generated tokens for the decoder" 
 	- Distinguish the role of decoder self-attention from cross-attention.
 		- If the transformer uses a single input of sequence (i.e., Not a Sequence-to-Sequence), then Self-attention would suffice.
 		- But when we have the requirement of Translation or Summarization, then the output sequence must depend on the entire input sequence and this is possible with the cross attention
@@ -151,13 +153,43 @@ Ans:
 
 > **Q4.1** **—** **From Hidden States to Next-Token Selection** - After a prompt has passed through the transformer's layers, how does a decoder-only language model produce its next token? Explain the relationship between the final representation, vocabulary logits, token probabilities, and the selection of an output token.
 
-Ans: SKIPPED - NOT REQUIRED
+Ans: `SKIP_DEPTH`
 
 > **Q4.2** **—** **Autoregressive Generation** - Suppose a model generates a response containing five new tokens. Explain what happens after the first token is selected, how each subsequent token depends on the growing context, and why generation proceeds incrementally rather than producing all five tokens independently.
 
-Ans: SKIPPED - NOT REQUIRED
+Ans: `SKIP_DEPTH`
 
 >**Q4.3** **—** **Why Outputs Can Differ** - You send the same prompt twice to a language model and receive different responses. How can that happen if the model parameters and prompt are unchanged? Distinguish the model's predicted scores from the process used to select tokens.
 
 Ans:
-- 
+- Yes, in the case where the Tokenizer, Model parameters are unchanged, the probability distribution calculations will be same.
+- The difference in the outputs is generally dependent on the Token selection strategy i.e., Greedy Decoding or Sampling
+
+
+> **Q4.4** **—** **Complete Inference Walkthrough** - A user asks a decoder-only LLM: “Explain why the sky is blue.” Starting with the raw prompt and ending with the generated answer, walk through the complete inference path. Connect the important transformer components in their logical order and explain what repeats as the answer is produced.
+
+Ans: `SKIP_OVERLAP`
+
+
+> **FU-01** **—** **Training vs inference parallelism**. - Suppose a decoder-only transformer is given a 100-token prompt and must generate 20 more tokens. Which computations over the existing prompt can be parallelized, and which operations during generation still have sequential dependencies? Explain without discussing implementation details.
+
+Ans:
+- For a Decoder only model (Autoregressive model), the parallelism vs sequential ordering is applied differently at different phases.
+- Decoder only model which is generally trained for the text generation, use Casual Language model, where the current token is only dependent on the previous token from the sequence
+	- Parallelism during Training
+		- Let us take a sentence `Capital of India is Delhi`; During the training, we make the model to generate the next token for different configurations of the same input sequence
+		- Since all the tokens are already known, we know the actual expected token from the input sequence, we can simply spilt the training process which can be parallelized
+	- Sequential during Inference
+		- During the inference, since we don't know the expected future token, we have to compute the current token for continuation.
+		- That dependency forces standard autoregressive generation to proceed sequentially.
+- Parallelism within the Attention heads
+	- Irrespective of the transformer family, we have the attention heads, and this is always computed in parallel
+- So for a decoder-only transformer is given a 100-token prompt, which is the training process can be computed in parallel, but the inference requirement to generate 20 more tokens is sequential.
+
+ 
+ >**FU-02** **—** **Attention and FFN information flow** - Two tokens are processed through a transformer block. Which component lets one token gather information from the other? Which component then transforms each token independently? Why are both useful?
+ 
+Ans:
+- Within the transformer block, we have 2 major components - Attention heads and Feed-Forward network blocks
+- Within the attention heads, we calculate the `Attention Weights`, where for individual token, we gather the contextual information from the other tokens to capture the contextual meaning.
+- Once each we have contextual information captured, we must e
