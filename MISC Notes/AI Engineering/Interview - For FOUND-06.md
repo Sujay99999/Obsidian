@@ -219,3 +219,4 @@ Ans:
 Ans:
 - The model processes "The sky is" and calculates how likely each possible next token is based on the context. It might assign the highest probability to "blue", although other tokens such as "clear" or "gray" are also possible. Depending on the decoding strategy, it selects a token and appends it to the sequence.
 - The updated sequence, "The sky is blue", becomes the context for the next prediction. The model then calculates a new probability distribution and selects another token. This process repeats one token at a time, which is called autoregressive generation.
+
