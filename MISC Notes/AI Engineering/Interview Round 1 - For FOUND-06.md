@@ -192,4 +192,30 @@ Ans:
 Ans:
 - Within the transformer block, we have 2 major components - Attention heads and Feed-Forward network blocks
 - Within the attention heads, we calculate the `Attention Weights`, where for individual token, we gather the contextual information from the other tokens to capture the contextual meaning.
-- Once each we have contextual information captured, we must e
+- Once each we have contextual information captured, we must ensure to update the current token embedding with the new information, and this is performed within the FFN block
+- Within the FFN block, each token embedding undergoes a series of operations and is  processed independently from another, as there is no dependency
+
+ > **FU-03** **—** **Cross-attention and translation** - An encoder–decoder model translates “The cat sleeps” into French. The encoder has already processed the English sentence, and the decoder has generated part of the French translation. Explain where the queries, keys, and values come from during cross-attention, and what information the decoder is trying to obtain.
+ 
+ Ans:
+ - In self-attention, all three come from the same sequence. In cross-attention, they come from two different sources i.e., `K` and `V` come from the Encoder and `Q` comes from the Decoder
+ - So during the cross attention for the decoder, it tries to query based on a specific context/ asks for specific relation, and this is answered using the Keys and Value matrices from the existing encoded input values.
+
+> **FU-04** **—** **Engineering architecture choice** - You need to classify 10 million short support tickets daily into 15 fixed categories. Compare using a fine-tuned encoder classifier versus prompting a large decoder-only model. Which might you choose and what practical trade-offs would influence your decision?
+
+Ans:
+- Final choice of the model - Fine tuned Encoder classifier 
+- But what are we looking to compare (or) what is the yardstick here
+	- Accuracy - Model has to be accurate to place into the right bucket
+	- Inference cost - Cost for classifying one ticket
+	- Throughput - How many classifications can be a done in a fixed time window
+- Accuracy
+	- Due to the bidirectional token read, the encoder has better classification than compared to prompted decoder, but the most important advantage is that Encoder can directly predict one of the 15 classes (one for the category) rather than autoregressively generating a textual answer.
+- Inference cost
+	- Cost for the Decoder is generally higher than compared to Encoder and a small difference can impact a lot as we are dealing with 10 million tickets
+
+> **FU-05** **—** **Minimal generation-path verification** - A decoder-only LLM has processed “The sky is” and selects “blue” as its next token. In plain language, explain how it chooses “blue” from other possible tokens and what changes when it subsequently generates another token. No formulas, tensor shapes, or implementation details are required
+
+Ans:
+- The model processes "The sky is" and calculates how likely each possible next token is based on the context. It might assign the highest probability to "blue", although other tokens such as "clear" or "gray" are also possible. Depending on the decoding strategy, it selects a token and appends it to the sequence.
+- The updated sequence, "The sky is blue", becomes the context for the next prediction. The model then calculates a new probability distribution and selects another token. This process repeats one token at a time, which is called autoregressive generation.
